@@ -47,7 +47,7 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <string.h>
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -62,14 +62,14 @@ extern "C" {
 
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
-
+#define STR_DISP_LEN 4
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
-
+uint8_t displayString(uint8_t index, uint8_t* str, uint8_t length);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
@@ -122,7 +122,9 @@ void Error_Handler(void);
                                                                  0 bit  for subpriority */
 #endif
 /* USER CODE BEGIN Private defines */
-
+typedef enum {
+	Direction_DownUp, Direction_UpDown
+} Direction_;
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

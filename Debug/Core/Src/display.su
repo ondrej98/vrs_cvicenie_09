@@ -1,0 +1,9 @@
+stm32f3xx_ll_gpio.h:879:22:LL_GPIO_SetOutputPin	16	static
+stm32f3xx_ll_gpio.h:908:22:LL_GPIO_ResetOutputPin	16	static
+display.c:15:6:resetSegments	8	static
+display.c:26:6:setSegments	8	static
+display.c:37:6:resetDigits	8	static
+display.c:45:6:setDigits	8	static
+display.c:53:6:segmentsOn	24	static
+display.c:91:6:displayCharOnDigit	24	static
+display.c:95:6:updateDisplay	8	static
