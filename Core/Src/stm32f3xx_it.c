@@ -45,6 +45,8 @@
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
 extern bool nextStringSequence;
+extern uint8_t *aReceiveBuffer_read , end_of_read_flag;
+extern volatile uint8_t ubReceiveIndex;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -192,7 +194,12 @@ void SysTick_Handler(void) {
  */
 void I2C1_EV_IRQHandler(void) {
 	/* USER CODE BEGIN I2C1_EV_IRQn 0 */
-
+	if (LL_I2C_IsActiveFlag_RXNE(I2C1)) {
+		/* Call function Master Reception Callback */
+		aReceiveBuffer_read[ubReceiveIndex++] = LL_I2C_ReceiveData8(I2C1);
+		(ubReceiveIndex > 19) ? ubReceiveIndex = 0 : ubReceiveIndex;
+		end_of_read_flag = 0;
+	}
 	/* USER CODE END I2C1_EV_IRQn 0 */
 
 	/* USER CODE BEGIN I2C1_EV_IRQn 1 */

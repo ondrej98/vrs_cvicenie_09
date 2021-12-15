@@ -27,6 +27,9 @@
 /* USER CODE BEGIN Includes */
 #include "fonts.h"
 #include "display.h"
+#include "i2c.h"
+#include "../../compass/lis3mdltr.h"
+#include "../../accelerometer/lsm6ds0.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -51,6 +54,11 @@ extern DisplayDigitData_ DisplayDigit_1;
 extern DisplayDigitData_ DisplayDigit_2;
 extern DisplayDigitData_ DisplayDigit_3;
 extern bool nextStringSequence;
+extern uint8_t *aReceiveBuffer_read, end_of_read_flag;
+extern volatile uint8_t ubReceiveIndex;
+
+uint8_t temp = 0;
+float mag[3], acc[3];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -80,6 +88,9 @@ int main(void) {
 	DisplayDigit_3.chr = 0;
 	nextStringSequence = false;
 	Direction_ direction = Direction_DownUp;
+	*aReceiveBuffer_read = 0;
+	end_of_read_flag = 0;
+	ubReceiveIndex = 0;
 	/* USER CODE END 1 */
 
 	/* MCU Configuration--------------------------------------------------------*/
@@ -110,6 +121,8 @@ int main(void) {
 	MX_TIM6_Init();
 	MX_TIM7_Init();
 	/* USER CODE BEGIN 2 */
+	lsm6ds0_init();
+
 	uint8_t index = 0;
 	uint8_t string[] = "ONDREJ_DURMIS_98324";
 	uint8_t lenString = 19;
@@ -123,6 +136,7 @@ int main(void) {
 		/* USER CODE BEGIN 3 */
 		if (nextStringSequence) {
 			nextStringSequence = false;
+			lsm6ds0_get_acc(acc, (acc + 1), (acc + 2));
 			displayString(index, string, lenString);
 			if (index + STR_DISP_LEN < lenString
 					&& direction == Direction_DownUp) {
