@@ -88,7 +88,7 @@ int main(void) {
 	DisplayDigit_3.chr = 0;
 	nextStringSequence = false;
 	Direction_ direction = Direction_DownUp;
-	*aReceiveBuffer_read = 0;
+	//*aReceiveBuffer_read = 0;
 	end_of_read_flag = 0;
 	ubReceiveIndex = 0;
 	/* USER CODE END 1 */
