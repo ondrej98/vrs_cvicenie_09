@@ -47,17 +47,17 @@
 
 
 typedef struct {
-	uint8_t h0Rh;
-	uint8_t h1Rh;
-	uint16_t h0Out;
-	uint16_t h1Out;
+	int16_t h0Rh;
+	int16_t h1Rh;
+	int16_t h0Out;
+	int16_t h1Out;
 } Hts221HumidityStruct;
 
 typedef struct {
-	uint8_t t0DegC;
-	uint8_t t1DegC;
-	uint16_t t0Out;
-	uint16_t t1Out;
+	int16_t t0DegC;
+	int16_t t1DegC;
+	int16_t t0Out;
+	int16_t t1Out;
 } Hts221TemperatureStruct;
 
 uint8_t hts221_init(void);

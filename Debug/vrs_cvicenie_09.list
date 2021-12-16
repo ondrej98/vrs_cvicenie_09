@@ -5,21 +5,21 @@ Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
   0 .isr_vector   00000188  08000000  08000000  00010000  2**0
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  1 .text         00002134  08000188  08000188  00010188  2**2
+  1 .text         00002148  08000188  08000188  00010188  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .rodata       0000003c  080022bc  080022bc  000122bc  2**2
+  2 .rodata       0000003c  080022d0  080022d0  000122d0  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  3 .ARM.extab    00000000  080022f8  080022f8  0002000c  2**0
+  3 .ARM.extab    00000000  0800230c  0800230c  0002000c  2**0
                   CONTENTS
-  4 .ARM          00000000  080022f8  080022f8  0002000c  2**0
+  4 .ARM          00000000  0800230c  0800230c  0002000c  2**0
                   CONTENTS
-  5 .preinit_array 00000000  080022f8  080022f8  0002000c  2**0
+  5 .preinit_array 00000000  0800230c  0800230c  0002000c  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  6 .init_array   00000004  080022f8  080022f8  000122f8  2**2
+  6 .init_array   00000004  0800230c  0800230c  0001230c  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  7 .fini_array   00000004  080022fc  080022fc  000122fc  2**2
+  7 .fini_array   00000004  08002310  08002310  00012310  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  8 .data         0000000c  20000000  08002300  00020000  2**2
+  8 .data         0000000c  20000000  08002314  00020000  2**2
                   CONTENTS, ALLOC, LOAD, DATA
   9 .ccmram       00000000  10000000  10000000  0002000c  2**0
                   CONTENTS
@@ -39,13 +39,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  17 .debug_macro  000175d4  00000000  00000000  0002e6b0  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_line   00007703  00000000  00000000  00045c84  2**0
+ 18 .debug_line   000076e0  00000000  00000000  00045c84  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .debug_str    0007a3ea  00000000  00000000  0004d387  2**0
+ 19 .debug_str    0007a3ea  00000000  00000000  0004d364  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 20 .comment      00000053  00000000  00000000  000c7771  2**0
+ 20 .comment      00000053  00000000  00000000  000c774e  2**0
                   CONTENTS, READONLY
- 21 .debug_frame  00001c00  00000000  00000000  000c77c4  2**2
+ 21 .debug_frame  00001c00  00000000  00000000  000c77a4  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -64,7 +64,7 @@ Disassembly of section .text:
  800019e:	bd10      	pop	{r4, pc}
  80001a0:	2000000c 	.word	0x2000000c
  80001a4:	00000000 	.word	0x00000000
- 80001a8:	080022a4 	.word	0x080022a4
+ 80001a8:	080022b8 	.word	0x080022b8
 
 080001ac <frame_dummy>:
  80001ac:	b508      	push	{r3, lr}
@@ -76,7 +76,7 @@ Disassembly of section .text:
  80001ba:	bd08      	pop	{r3, pc}
  80001bc:	00000000 	.word	0x00000000
  80001c0:	20000010 	.word	0x20000010
- 80001c4:	080022a4 	.word	0x080022a4
+ 80001c4:	080022b8 	.word	0x080022b8
 
 080001c8 <LL_GPIO_SetOutputPin>:
   *         @arg @ref LL_GPIO_PIN_15
@@ -733,7 +733,7 @@ SegmentDigitStruct GetSegmentDigit(uint8_t chr) {
  8000634:	f85d 7b04 	ldr.w	r7, [sp], #4
  8000638:	4770      	bx	lr
  800063a:	bf00      	nop
- 800063c:	080022d0 	.word	0x080022d0
+ 800063c:	080022e4 	.word	0x080022e4
 
 08000640 <LL_AHB1_GRP1_EnableClock>:
   *
@@ -2432,7 +2432,7 @@ int main(void) {
  8001006:	f000 fffb 	bl	8002000 <hts221_get_humidity>
 			hts221_get_temperature(&temperature);
  800100a:	4825      	ldr	r0, [pc, #148]	; (80010a0 <main+0x148>)
- 800100c:	f001 f842 	bl	8002094 <hts221_get_temperature>
+ 800100c:	f001 f848 	bl	80020a0 <hts221_get_temperature>
 			displayString(index, string, lenString);
  8001010:	7d7a      	ldrb	r2, [r7, #21]
  8001012:	4639      	mov	r1, r7
@@ -2501,7 +2501,7 @@ int main(void) {
  8001080:	20000054 	.word	0x20000054
  8001084:	20000044 	.word	0x20000044
  8001088:	2000003c 	.word	0x2000003c
- 800108c:	080022bc 	.word	0x080022bc
+ 800108c:	080022d0 	.word	0x080022d0
  8001090:	2000004c 	.word	0x2000004c
  8001094:	20000050 	.word	0x20000050
  8001098:	20000048 	.word	0x20000048
@@ -3562,7 +3562,7 @@ LoopFillZerobss:
  8001636:	f7ff fe61 	bl	80012fc <SystemInit>
 /* Call static constructors */
     bl __libc_init_array
- 800163a:	f000 fe0f 	bl	800225c <__libc_init_array>
+ 800163a:	f000 fe19 	bl	8002270 <__libc_init_array>
 /* Call the application's entry point.*/
 	bl	main
  800163e:	f7ff fc8b 	bl	8000f58 <main>
@@ -3579,7 +3579,7 @@ LoopForever:
   ldr r1, =_edata
  800164c:	2000000c 	.word	0x2000000c
   ldr r2, =_sidata
- 8001650:	08002300 	.word	0x08002300
+ 8001650:	08002314 	.word	0x08002314
   ldr r2, =_sbss
  8001654:	2000000c 	.word	0x2000000c
   ldr r4, =_ebss
@@ -5167,7 +5167,7 @@ uint8_t hts221_init(void) {
 		hts221_get_factory_coef(&HumidityFactoryCoef, &TemperatureFactoryCoef);
  8001fe6:	4904      	ldr	r1, [pc, #16]	; (8001ff8 <hts221_init+0x94>)
  8001fe8:	4804      	ldr	r0, [pc, #16]	; (8001ffc <hts221_init+0x98>)
- 8001fea:	f000 f8a1 	bl	8002130 <hts221_get_factory_coef>
+ 8001fea:	f000 f8ad 	bl	8002148 <hts221_get_factory_coef>
 	}
 	return result;
  8001fee:	79fb      	ldrb	r3, [r7, #7]
@@ -5195,356 +5195,348 @@ void hts221_get_humidity(float *humidity) {
  8002012:	2128      	movs	r1, #40	; 0x28
  8002014:	4618      	mov	r0, r3
  8002016:	f7ff ff8d 	bl	8001f34 <hts221_readArray>
-	uint16_t hOut = ((uint16_t) buffer[1]) << 8 | buffer[0];
+	int16_t hOut = ((int16_t) buffer[1]) << 8 | buffer[0];
  800201a:	7b7b      	ldrb	r3, [r7, #13]
  800201c:	021b      	lsls	r3, r3, #8
  800201e:	b21a      	sxth	r2, r3
  8002020:	7b3b      	ldrb	r3, [r7, #12]
  8002022:	b21b      	sxth	r3, r3
  8002024:	4313      	orrs	r3, r2
- 8002026:	b21b      	sxth	r3, r3
- 8002028:	82fb      	strh	r3, [r7, #22]
-	uint16_t h0Rh = HumidityFactoryCoef.h0Rh;
- 800202a:	4b19      	ldr	r3, [pc, #100]	; (8002090 <hts221_get_humidity+0x90>)
- 800202c:	781b      	ldrb	r3, [r3, #0]
- 800202e:	82bb      	strh	r3, [r7, #20]
-	uint16_t h1Rh = HumidityFactoryCoef.h1Rh;
- 8002030:	4b17      	ldr	r3, [pc, #92]	; (8002090 <hts221_get_humidity+0x90>)
- 8002032:	785b      	ldrb	r3, [r3, #1]
- 8002034:	827b      	strh	r3, [r7, #18]
-	uint16_t h0T0 = HumidityFactoryCoef.h0Out;
- 8002036:	4b16      	ldr	r3, [pc, #88]	; (8002090 <hts221_get_humidity+0x90>)
- 8002038:	885b      	ldrh	r3, [r3, #2]
- 800203a:	823b      	strh	r3, [r7, #16]
-	uint16_t h1T0 = HumidityFactoryCoef.h1Out;
- 800203c:	4b14      	ldr	r3, [pc, #80]	; (8002090 <hts221_get_humidity+0x90>)
- 800203e:	889b      	ldrh	r3, [r3, #4]
- 8002040:	81fb      	strh	r3, [r7, #14]
+ 8002026:	82fb      	strh	r3, [r7, #22]
+	int16_t h0Rh = HumidityFactoryCoef.h0Rh;
+ 8002028:	4b1c      	ldr	r3, [pc, #112]	; (800209c <hts221_get_humidity+0x9c>)
+ 800202a:	881b      	ldrh	r3, [r3, #0]
+ 800202c:	82bb      	strh	r3, [r7, #20]
+	int16_t h1Rh = HumidityFactoryCoef.h1Rh;
+ 800202e:	4b1b      	ldr	r3, [pc, #108]	; (800209c <hts221_get_humidity+0x9c>)
+ 8002030:	885b      	ldrh	r3, [r3, #2]
+ 8002032:	827b      	strh	r3, [r7, #18]
+	int16_t h0T0 = HumidityFactoryCoef.h0Out;
+ 8002034:	4b19      	ldr	r3, [pc, #100]	; (800209c <hts221_get_humidity+0x9c>)
+ 8002036:	889b      	ldrh	r3, [r3, #4]
+ 8002038:	823b      	strh	r3, [r7, #16]
+	int16_t h1T0 = HumidityFactoryCoef.h1Out;
+ 800203a:	4b18      	ldr	r3, [pc, #96]	; (800209c <hts221_get_humidity+0x9c>)
+ 800203c:	88db      	ldrh	r3, [r3, #6]
+ 800203e:	81fb      	strh	r3, [r7, #14]
 	*humidity = ((float)(h1Rh - h0Rh) * (float)(hOut - h0T0)) / (float)(h1T0 - h0T0) + h0Rh;
- 8002042:	8a7a      	ldrh	r2, [r7, #18]
- 8002044:	8abb      	ldrh	r3, [r7, #20]
- 8002046:	1ad3      	subs	r3, r2, r3
- 8002048:	ee07 3a90 	vmov	s15, r3
- 800204c:	eeb8 7ae7 	vcvt.f32.s32	s14, s15
- 8002050:	8afa      	ldrh	r2, [r7, #22]
- 8002052:	8a3b      	ldrh	r3, [r7, #16]
- 8002054:	1ad3      	subs	r3, r2, r3
- 8002056:	ee07 3a90 	vmov	s15, r3
- 800205a:	eef8 7ae7 	vcvt.f32.s32	s15, s15
- 800205e:	ee67 6a27 	vmul.f32	s13, s14, s15
- 8002062:	89fa      	ldrh	r2, [r7, #14]
- 8002064:	8a3b      	ldrh	r3, [r7, #16]
- 8002066:	1ad3      	subs	r3, r2, r3
- 8002068:	ee07 3a90 	vmov	s15, r3
- 800206c:	eef8 7ae7 	vcvt.f32.s32	s15, s15
- 8002070:	ee86 7aa7 	vdiv.f32	s14, s13, s15
- 8002074:	8abb      	ldrh	r3, [r7, #20]
- 8002076:	ee07 3a90 	vmov	s15, r3
- 800207a:	eef8 7ae7 	vcvt.f32.s32	s15, s15
- 800207e:	ee77 7a27 	vadd.f32	s15, s14, s15
- 8002082:	687b      	ldr	r3, [r7, #4]
- 8002084:	edc3 7a00 	vstr	s15, [r3]
+ 8002040:	f9b7 2012 	ldrsh.w	r2, [r7, #18]
+ 8002044:	f9b7 3014 	ldrsh.w	r3, [r7, #20]
+ 8002048:	1ad3      	subs	r3, r2, r3
+ 800204a:	ee07 3a90 	vmov	s15, r3
+ 800204e:	eeb8 7ae7 	vcvt.f32.s32	s14, s15
+ 8002052:	f9b7 2016 	ldrsh.w	r2, [r7, #22]
+ 8002056:	f9b7 3010 	ldrsh.w	r3, [r7, #16]
+ 800205a:	1ad3      	subs	r3, r2, r3
+ 800205c:	ee07 3a90 	vmov	s15, r3
+ 8002060:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+ 8002064:	ee67 6a27 	vmul.f32	s13, s14, s15
+ 8002068:	f9b7 200e 	ldrsh.w	r2, [r7, #14]
+ 800206c:	f9b7 3010 	ldrsh.w	r3, [r7, #16]
+ 8002070:	1ad3      	subs	r3, r2, r3
+ 8002072:	ee07 3a90 	vmov	s15, r3
+ 8002076:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+ 800207a:	ee86 7aa7 	vdiv.f32	s14, s13, s15
+ 800207e:	f9b7 3014 	ldrsh.w	r3, [r7, #20]
+ 8002082:	ee07 3a90 	vmov	s15, r3
+ 8002086:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+ 800208a:	ee77 7a27 	vadd.f32	s15, s14, s15
+ 800208e:	687b      	ldr	r3, [r7, #4]
+ 8002090:	edc3 7a00 	vstr	s15, [r3]
 }
- 8002088:	bf00      	nop
- 800208a:	3718      	adds	r7, #24
- 800208c:	46bd      	mov	sp, r7
- 800208e:	bd80      	pop	{r7, pc}
- 8002090:	20000070 	.word	0x20000070
+ 8002094:	bf00      	nop
+ 8002096:	3718      	adds	r7, #24
+ 8002098:	46bd      	mov	sp, r7
+ 800209a:	bd80      	pop	{r7, pc}
+ 800209c:	20000070 	.word	0x20000070
 
-08002094 <hts221_get_temperature>:
+080020a0 <hts221_get_temperature>:
 
 void hts221_get_temperature(float *temperature) {
- 8002094:	b580      	push	{r7, lr}
- 8002096:	b086      	sub	sp, #24
- 8002098:	af00      	add	r7, sp, #0
- 800209a:	6078      	str	r0, [r7, #4]
+ 80020a0:	b580      	push	{r7, lr}
+ 80020a2:	b086      	sub	sp, #24
+ 80020a4:	af00      	add	r7, sp, #0
+ 80020a6:	6078      	str	r0, [r7, #4]
 	uint8_t buffer[2] = { 0 };
- 800209c:	2300      	movs	r3, #0
- 800209e:	81bb      	strh	r3, [r7, #12]
+ 80020a8:	2300      	movs	r3, #0
+ 80020aa:	81bb      	strh	r3, [r7, #12]
 	//hts221_readArray(buffer, HTS221_ADDRESS_T_OUT_L, 2);
 	buffer[0] = hts221_read_byte(HTS221_ADDRESS_T_OUT_L);
- 80020a0:	202a      	movs	r0, #42	; 0x2a
- 80020a2:	f7ff ff17 	bl	8001ed4 <hts221_read_byte>
- 80020a6:	4603      	mov	r3, r0
- 80020a8:	733b      	strb	r3, [r7, #12]
+ 80020ac:	202a      	movs	r0, #42	; 0x2a
+ 80020ae:	f7ff ff11 	bl	8001ed4 <hts221_read_byte>
+ 80020b2:	4603      	mov	r3, r0
+ 80020b4:	733b      	strb	r3, [r7, #12]
 	buffer[1] = hts221_read_byte(HTS221_ADDRESS_T_OUT_H);
- 80020aa:	202b      	movs	r0, #43	; 0x2b
- 80020ac:	f7ff ff12 	bl	8001ed4 <hts221_read_byte>
- 80020b0:	4603      	mov	r3, r0
- 80020b2:	737b      	strb	r3, [r7, #13]
-	uint16_t tOut = ((uint16_t) buffer[1]) << 8 | buffer[0];
- 80020b4:	7b7b      	ldrb	r3, [r7, #13]
- 80020b6:	021b      	lsls	r3, r3, #8
- 80020b8:	b21a      	sxth	r2, r3
- 80020ba:	7b3b      	ldrb	r3, [r7, #12]
- 80020bc:	b21b      	sxth	r3, r3
- 80020be:	4313      	orrs	r3, r2
- 80020c0:	b21b      	sxth	r3, r3
- 80020c2:	82fb      	strh	r3, [r7, #22]
-	uint16_t t0Deg = TemperatureFactoryCoef.t0DegC;
- 80020c4:	4b19      	ldr	r3, [pc, #100]	; (800212c <hts221_get_temperature+0x98>)
- 80020c6:	781b      	ldrb	r3, [r3, #0]
- 80020c8:	82bb      	strh	r3, [r7, #20]
-	uint16_t t1Deg = TemperatureFactoryCoef.t1DegC;
- 80020ca:	4b18      	ldr	r3, [pc, #96]	; (800212c <hts221_get_temperature+0x98>)
- 80020cc:	785b      	ldrb	r3, [r3, #1]
- 80020ce:	827b      	strh	r3, [r7, #18]
-	uint16_t t0Out = TemperatureFactoryCoef.t0Out;
- 80020d0:	4b16      	ldr	r3, [pc, #88]	; (800212c <hts221_get_temperature+0x98>)
- 80020d2:	885b      	ldrh	r3, [r3, #2]
- 80020d4:	823b      	strh	r3, [r7, #16]
-	uint16_t t1Out = TemperatureFactoryCoef.t1Out;
- 80020d6:	4b15      	ldr	r3, [pc, #84]	; (800212c <hts221_get_temperature+0x98>)
- 80020d8:	889b      	ldrh	r3, [r3, #4]
- 80020da:	81fb      	strh	r3, [r7, #14]
+ 80020b6:	202b      	movs	r0, #43	; 0x2b
+ 80020b8:	f7ff ff0c 	bl	8001ed4 <hts221_read_byte>
+ 80020bc:	4603      	mov	r3, r0
+ 80020be:	737b      	strb	r3, [r7, #13]
+	int16_t tOut = ((int16_t) buffer[1]) << 8 | buffer[0];
+ 80020c0:	7b7b      	ldrb	r3, [r7, #13]
+ 80020c2:	021b      	lsls	r3, r3, #8
+ 80020c4:	b21a      	sxth	r2, r3
+ 80020c6:	7b3b      	ldrb	r3, [r7, #12]
+ 80020c8:	b21b      	sxth	r3, r3
+ 80020ca:	4313      	orrs	r3, r2
+ 80020cc:	82fb      	strh	r3, [r7, #22]
+	int16_t t0Deg = TemperatureFactoryCoef.t0DegC;
+ 80020ce:	4b1d      	ldr	r3, [pc, #116]	; (8002144 <hts221_get_temperature+0xa4>)
+ 80020d0:	881b      	ldrh	r3, [r3, #0]
+ 80020d2:	82bb      	strh	r3, [r7, #20]
+	int16_t t1Deg = TemperatureFactoryCoef.t1DegC;
+ 80020d4:	4b1b      	ldr	r3, [pc, #108]	; (8002144 <hts221_get_temperature+0xa4>)
+ 80020d6:	885b      	ldrh	r3, [r3, #2]
+ 80020d8:	827b      	strh	r3, [r7, #18]
+	int16_t t0Out = TemperatureFactoryCoef.t0Out;
+ 80020da:	4b1a      	ldr	r3, [pc, #104]	; (8002144 <hts221_get_temperature+0xa4>)
+ 80020dc:	889b      	ldrh	r3, [r3, #4]
+ 80020de:	823b      	strh	r3, [r7, #16]
+	int16_t t1Out = TemperatureFactoryCoef.t1Out;
+ 80020e0:	4b18      	ldr	r3, [pc, #96]	; (8002144 <hts221_get_temperature+0xa4>)
+ 80020e2:	88db      	ldrh	r3, [r3, #6]
+ 80020e4:	81fb      	strh	r3, [r7, #14]
 	*temperature = ((float)(t1Deg - t0Deg) * (float)(tOut - t0Out)) / (float)(t1Out - t0Out) + t0Deg;
- 80020dc:	8a7a      	ldrh	r2, [r7, #18]
- 80020de:	8abb      	ldrh	r3, [r7, #20]
- 80020e0:	1ad3      	subs	r3, r2, r3
- 80020e2:	ee07 3a90 	vmov	s15, r3
- 80020e6:	eeb8 7ae7 	vcvt.f32.s32	s14, s15
- 80020ea:	8afa      	ldrh	r2, [r7, #22]
- 80020ec:	8a3b      	ldrh	r3, [r7, #16]
+ 80020e6:	f9b7 2012 	ldrsh.w	r2, [r7, #18]
+ 80020ea:	f9b7 3014 	ldrsh.w	r3, [r7, #20]
  80020ee:	1ad3      	subs	r3, r2, r3
  80020f0:	ee07 3a90 	vmov	s15, r3
- 80020f4:	eef8 7ae7 	vcvt.f32.s32	s15, s15
- 80020f8:	ee67 6a27 	vmul.f32	s13, s14, s15
- 80020fc:	89fa      	ldrh	r2, [r7, #14]
- 80020fe:	8a3b      	ldrh	r3, [r7, #16]
+ 80020f4:	eeb8 7ae7 	vcvt.f32.s32	s14, s15
+ 80020f8:	f9b7 2016 	ldrsh.w	r2, [r7, #22]
+ 80020fc:	f9b7 3010 	ldrsh.w	r3, [r7, #16]
  8002100:	1ad3      	subs	r3, r2, r3
  8002102:	ee07 3a90 	vmov	s15, r3
  8002106:	eef8 7ae7 	vcvt.f32.s32	s15, s15
- 800210a:	ee86 7aa7 	vdiv.f32	s14, s13, s15
- 800210e:	8abb      	ldrh	r3, [r7, #20]
- 8002110:	ee07 3a90 	vmov	s15, r3
- 8002114:	eef8 7ae7 	vcvt.f32.s32	s15, s15
- 8002118:	ee77 7a27 	vadd.f32	s15, s14, s15
- 800211c:	687b      	ldr	r3, [r7, #4]
- 800211e:	edc3 7a00 	vstr	s15, [r3]
+ 800210a:	ee67 6a27 	vmul.f32	s13, s14, s15
+ 800210e:	f9b7 200e 	ldrsh.w	r2, [r7, #14]
+ 8002112:	f9b7 3010 	ldrsh.w	r3, [r7, #16]
+ 8002116:	1ad3      	subs	r3, r2, r3
+ 8002118:	ee07 3a90 	vmov	s15, r3
+ 800211c:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+ 8002120:	ee86 7aa7 	vdiv.f32	s14, s13, s15
+ 8002124:	f9b7 3014 	ldrsh.w	r3, [r7, #20]
+ 8002128:	ee07 3a90 	vmov	s15, r3
+ 800212c:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+ 8002130:	ee77 7a27 	vadd.f32	s15, s14, s15
+ 8002134:	687b      	ldr	r3, [r7, #4]
+ 8002136:	edc3 7a00 	vstr	s15, [r3]
 }
- 8002122:	bf00      	nop
- 8002124:	3718      	adds	r7, #24
- 8002126:	46bd      	mov	sp, r7
- 8002128:	bd80      	pop	{r7, pc}
- 800212a:	bf00      	nop
- 800212c:	20000068 	.word	0x20000068
+ 800213a:	bf00      	nop
+ 800213c:	3718      	adds	r7, #24
+ 800213e:	46bd      	mov	sp, r7
+ 8002140:	bd80      	pop	{r7, pc}
+ 8002142:	bf00      	nop
+ 8002144:	20000068 	.word	0x20000068
 
-08002130 <hts221_get_factory_coef>:
+08002148 <hts221_get_factory_coef>:
 
 void hts221_get_factory_coef(Hts221HumidityStruct *humidityStruct,
 		Hts221TemperatureStruct *temperatureStruct) {
- 8002130:	b580      	push	{r7, lr}
- 8002132:	b088      	sub	sp, #32
- 8002134:	af00      	add	r7, sp, #0
- 8002136:	6078      	str	r0, [r7, #4]
- 8002138:	6039      	str	r1, [r7, #0]
+ 8002148:	b580      	push	{r7, lr}
+ 800214a:	b088      	sub	sp, #32
+ 800214c:	af00      	add	r7, sp, #0
+ 800214e:	6078      	str	r0, [r7, #4]
+ 8002150:	6039      	str	r1, [r7, #0]
 	//Get humidity factory coef.
-	uint8_t h0RhX2 = hts221_read_byte(HTS221_ADDRESS_H0_rH_x2);
- 800213a:	2030      	movs	r0, #48	; 0x30
- 800213c:	f7ff feca 	bl	8001ed4 <hts221_read_byte>
- 8002140:	4603      	mov	r3, r0
- 8002142:	77fb      	strb	r3, [r7, #31]
-	uint8_t h1RhX2 = hts221_read_byte(HTS221_ADDRESS_H1_rH_x2);
- 8002144:	2031      	movs	r0, #49	; 0x31
- 8002146:	f7ff fec5 	bl	8001ed4 <hts221_read_byte>
- 800214a:	4603      	mov	r3, r0
- 800214c:	77bb      	strb	r3, [r7, #30]
+	int16_t h0RhX2 = (int16_t)hts221_read_byte(HTS221_ADDRESS_H0_rH_x2);
+ 8002152:	2030      	movs	r0, #48	; 0x30
+ 8002154:	f7ff febe 	bl	8001ed4 <hts221_read_byte>
+ 8002158:	4603      	mov	r3, r0
+ 800215a:	83fb      	strh	r3, [r7, #30]
+	int16_t h1RhX2 = (int16_t)hts221_read_byte(HTS221_ADDRESS_H1_rH_x2);
+ 800215c:	2031      	movs	r0, #49	; 0x31
+ 800215e:	f7ff feb9 	bl	8001ed4 <hts221_read_byte>
+ 8002162:	4603      	mov	r3, r0
+ 8002164:	83bb      	strh	r3, [r7, #28]
 	uint8_t buffer[4] = { 0 };
- 800214e:	2300      	movs	r3, #0
- 8002150:	60fb      	str	r3, [r7, #12]
+ 8002166:	2300      	movs	r3, #0
+ 8002168:	60bb      	str	r3, [r7, #8]
 	hts221_readArray(buffer, HTS221_ADDRESS_H0_OUT_L, 2);
- 8002152:	f107 030c 	add.w	r3, r7, #12
- 8002156:	2202      	movs	r2, #2
- 8002158:	2136      	movs	r1, #54	; 0x36
- 800215a:	4618      	mov	r0, r3
- 800215c:	f7ff feea 	bl	8001f34 <hts221_readArray>
+ 800216a:	f107 0308 	add.w	r3, r7, #8
+ 800216e:	2202      	movs	r2, #2
+ 8002170:	2136      	movs	r1, #54	; 0x36
+ 8002172:	4618      	mov	r0, r3
+ 8002174:	f7ff fede 	bl	8001f34 <hts221_readArray>
 	hts221_readArray(buffer + 2, HTS221_ADDRESS_H1_OUT_L, 2);
- 8002160:	f107 030c 	add.w	r3, r7, #12
- 8002164:	3302      	adds	r3, #2
- 8002166:	2202      	movs	r2, #2
- 8002168:	213a      	movs	r1, #58	; 0x3a
- 800216a:	4618      	mov	r0, r3
- 800216c:	f7ff fee2 	bl	8001f34 <hts221_readArray>
-	uint16_t h0Out = ((uint16_t) buffer[1]) << 8 | (uint16_t)buffer[0];
- 8002170:	7b7b      	ldrb	r3, [r7, #13]
- 8002172:	021b      	lsls	r3, r3, #8
- 8002174:	b21a      	sxth	r2, r3
- 8002176:	7b3b      	ldrb	r3, [r7, #12]
- 8002178:	b21b      	sxth	r3, r3
- 800217a:	4313      	orrs	r3, r2
- 800217c:	b21b      	sxth	r3, r3
- 800217e:	83bb      	strh	r3, [r7, #28]
-	uint16_t h1Out = ((uint16_t) buffer[3]) << 8 | (uint16_t)buffer[2];
- 8002180:	7bfb      	ldrb	r3, [r7, #15]
- 8002182:	021b      	lsls	r3, r3, #8
- 8002184:	b21a      	sxth	r2, r3
- 8002186:	7bbb      	ldrb	r3, [r7, #14]
- 8002188:	b21b      	sxth	r3, r3
- 800218a:	4313      	orrs	r3, r2
- 800218c:	b21b      	sxth	r3, r3
- 800218e:	837b      	strh	r3, [r7, #26]
+ 8002178:	f107 0308 	add.w	r3, r7, #8
+ 800217c:	3302      	adds	r3, #2
+ 800217e:	2202      	movs	r2, #2
+ 8002180:	213a      	movs	r1, #58	; 0x3a
+ 8002182:	4618      	mov	r0, r3
+ 8002184:	f7ff fed6 	bl	8001f34 <hts221_readArray>
+	int16_t h0Out = ((int16_t) buffer[1]) << 8 | (int16_t)buffer[0];
+ 8002188:	7a7b      	ldrb	r3, [r7, #9]
+ 800218a:	021b      	lsls	r3, r3, #8
+ 800218c:	b21a      	sxth	r2, r3
+ 800218e:	7a3b      	ldrb	r3, [r7, #8]
+ 8002190:	b21b      	sxth	r3, r3
+ 8002192:	4313      	orrs	r3, r2
+ 8002194:	837b      	strh	r3, [r7, #26]
+	int16_t h1Out = ((int16_t) buffer[3]) << 8 | (int16_t)buffer[2];
+ 8002196:	7afb      	ldrb	r3, [r7, #11]
+ 8002198:	021b      	lsls	r3, r3, #8
+ 800219a:	b21a      	sxth	r2, r3
+ 800219c:	7abb      	ldrb	r3, [r7, #10]
+ 800219e:	b21b      	sxth	r3, r3
+ 80021a0:	4313      	orrs	r3, r2
+ 80021a2:	833b      	strh	r3, [r7, #24]
 
-	humidityStruct->h0Rh = h0RhX2 / 2;
- 8002190:	7ffb      	ldrb	r3, [r7, #31]
- 8002192:	085b      	lsrs	r3, r3, #1
- 8002194:	b2da      	uxtb	r2, r3
- 8002196:	687b      	ldr	r3, [r7, #4]
- 8002198:	701a      	strb	r2, [r3, #0]
-	humidityStruct->h1Rh = h1RhX2 / 2;
- 800219a:	7fbb      	ldrb	r3, [r7, #30]
- 800219c:	085b      	lsrs	r3, r3, #1
- 800219e:	b2da      	uxtb	r2, r3
- 80021a0:	687b      	ldr	r3, [r7, #4]
- 80021a2:	705a      	strb	r2, [r3, #1]
+	humidityStruct->h0Rh = h0RhX2 >> 1;
+ 80021a4:	f9b7 301e 	ldrsh.w	r3, [r7, #30]
+ 80021a8:	105b      	asrs	r3, r3, #1
+ 80021aa:	b21a      	sxth	r2, r3
+ 80021ac:	687b      	ldr	r3, [r7, #4]
+ 80021ae:	801a      	strh	r2, [r3, #0]
+	humidityStruct->h1Rh = h1RhX2 >> 1;
+ 80021b0:	f9b7 301c 	ldrsh.w	r3, [r7, #28]
+ 80021b4:	105b      	asrs	r3, r3, #1
+ 80021b6:	b21a      	sxth	r2, r3
+ 80021b8:	687b      	ldr	r3, [r7, #4]
+ 80021ba:	805a      	strh	r2, [r3, #2]
 	humidityStruct->h0Out = h0Out;
- 80021a4:	687b      	ldr	r3, [r7, #4]
- 80021a6:	8bba      	ldrh	r2, [r7, #28]
- 80021a8:	805a      	strh	r2, [r3, #2]
+ 80021bc:	687b      	ldr	r3, [r7, #4]
+ 80021be:	8b7a      	ldrh	r2, [r7, #26]
+ 80021c0:	809a      	strh	r2, [r3, #4]
 	humidityStruct->h1Out = h1Out;
- 80021aa:	687b      	ldr	r3, [r7, #4]
- 80021ac:	8b7a      	ldrh	r2, [r7, #26]
- 80021ae:	809a      	strh	r2, [r3, #4]
+ 80021c2:	687b      	ldr	r3, [r7, #4]
+ 80021c4:	8b3a      	ldrh	r2, [r7, #24]
+ 80021c6:	80da      	strh	r2, [r3, #6]
 	//Get temperature factory coef.
 	buffer[0] = hts221_read_byte(HTS221_ADDRESS_T0_degC_x8);
- 80021b0:	2032      	movs	r0, #50	; 0x32
- 80021b2:	f7ff fe8f 	bl	8001ed4 <hts221_read_byte>
- 80021b6:	4603      	mov	r3, r0
- 80021b8:	733b      	strb	r3, [r7, #12]
+ 80021c8:	2032      	movs	r0, #50	; 0x32
+ 80021ca:	f7ff fe83 	bl	8001ed4 <hts221_read_byte>
+ 80021ce:	4603      	mov	r3, r0
+ 80021d0:	723b      	strb	r3, [r7, #8]
 	buffer[2] = hts221_read_byte(HTS221_ADDRESS_T1_degC_x8);
- 80021ba:	2033      	movs	r0, #51	; 0x33
- 80021bc:	f7ff fe8a 	bl	8001ed4 <hts221_read_byte>
- 80021c0:	4603      	mov	r3, r0
- 80021c2:	73bb      	strb	r3, [r7, #14]
-	uint8_t t0t1Msb = hts221_read_byte(HTS221_ADDRESS_T1_T0_MSB);
- 80021c4:	2035      	movs	r0, #53	; 0x35
- 80021c6:	f7ff fe85 	bl	8001ed4 <hts221_read_byte>
- 80021ca:	4603      	mov	r3, r0
- 80021cc:	767b      	strb	r3, [r7, #25]
+ 80021d2:	2033      	movs	r0, #51	; 0x33
+ 80021d4:	f7ff fe7e 	bl	8001ed4 <hts221_read_byte>
+ 80021d8:	4603      	mov	r3, r0
+ 80021da:	72bb      	strb	r3, [r7, #10]
+	int16_t t0t1Msb = (int16_t)hts221_read_byte(HTS221_ADDRESS_T1_T0_MSB);
+ 80021dc:	2035      	movs	r0, #53	; 0x35
+ 80021de:	f7ff fe79 	bl	8001ed4 <hts221_read_byte>
+ 80021e2:	4603      	mov	r3, r0
+ 80021e4:	82fb      	strh	r3, [r7, #22]
 	buffer[1] = t0t1Msb & 0x03;
- 80021ce:	7e7b      	ldrb	r3, [r7, #25]
- 80021d0:	f003 0303 	and.w	r3, r3, #3
- 80021d4:	b2db      	uxtb	r3, r3
- 80021d6:	737b      	strb	r3, [r7, #13]
+ 80021e6:	8afb      	ldrh	r3, [r7, #22]
+ 80021e8:	b2db      	uxtb	r3, r3
+ 80021ea:	f003 0303 	and.w	r3, r3, #3
+ 80021ee:	b2db      	uxtb	r3, r3
+ 80021f0:	727b      	strb	r3, [r7, #9]
 	buffer[3] = t0t1Msb & 0x0C;
- 80021d8:	7e7b      	ldrb	r3, [r7, #25]
- 80021da:	f003 030c 	and.w	r3, r3, #12
- 80021de:	b2db      	uxtb	r3, r3
- 80021e0:	73fb      	strb	r3, [r7, #15]
-	uint16_t t0DegX8 = ((uint16_t) buffer[1]) << 8 | (uint16_t)buffer[0];
- 80021e2:	7b7b      	ldrb	r3, [r7, #13]
- 80021e4:	021b      	lsls	r3, r3, #8
- 80021e6:	b21a      	sxth	r2, r3
- 80021e8:	7b3b      	ldrb	r3, [r7, #12]
- 80021ea:	b21b      	sxth	r3, r3
- 80021ec:	4313      	orrs	r3, r2
- 80021ee:	b21b      	sxth	r3, r3
- 80021f0:	82fb      	strh	r3, [r7, #22]
-	uint16_t t1DegX8 = ((uint16_t) buffer[3]) << 8 | (uint16_t)buffer[2];
- 80021f2:	7bfb      	ldrb	r3, [r7, #15]
- 80021f4:	021b      	lsls	r3, r3, #8
- 80021f6:	b21a      	sxth	r2, r3
- 80021f8:	7bbb      	ldrb	r3, [r7, #14]
- 80021fa:	b21b      	sxth	r3, r3
- 80021fc:	4313      	orrs	r3, r2
- 80021fe:	b21b      	sxth	r3, r3
- 8002200:	82bb      	strh	r3, [r7, #20]
+ 80021f2:	8afb      	ldrh	r3, [r7, #22]
+ 80021f4:	b2db      	uxtb	r3, r3
+ 80021f6:	f003 030c 	and.w	r3, r3, #12
+ 80021fa:	b2db      	uxtb	r3, r3
+ 80021fc:	72fb      	strb	r3, [r7, #11]
+	int16_t t0DegX8 = ((int16_t) buffer[1]) << 8 | (int16_t)buffer[0];
+ 80021fe:	7a7b      	ldrb	r3, [r7, #9]
+ 8002200:	021b      	lsls	r3, r3, #8
+ 8002202:	b21a      	sxth	r2, r3
+ 8002204:	7a3b      	ldrb	r3, [r7, #8]
+ 8002206:	b21b      	sxth	r3, r3
+ 8002208:	4313      	orrs	r3, r2
+ 800220a:	82bb      	strh	r3, [r7, #20]
+	int16_t t1DegX8 = ((int16_t) buffer[3]) << 6 | (int16_t)buffer[2];
+ 800220c:	7afb      	ldrb	r3, [r7, #11]
+ 800220e:	019b      	lsls	r3, r3, #6
+ 8002210:	b21a      	sxth	r2, r3
+ 8002212:	7abb      	ldrb	r3, [r7, #10]
+ 8002214:	b21b      	sxth	r3, r3
+ 8002216:	4313      	orrs	r3, r2
+ 8002218:	827b      	strh	r3, [r7, #18]
 	hts221_readArray(buffer, HTS221_ADDRESS_T0_OUT_L, 4);
- 8002202:	f107 030c 	add.w	r3, r7, #12
- 8002206:	2204      	movs	r2, #4
- 8002208:	213c      	movs	r1, #60	; 0x3c
- 800220a:	4618      	mov	r0, r3
- 800220c:	f7ff fe92 	bl	8001f34 <hts221_readArray>
+ 800221a:	f107 0308 	add.w	r3, r7, #8
+ 800221e:	2204      	movs	r2, #4
+ 8002220:	213c      	movs	r1, #60	; 0x3c
+ 8002222:	4618      	mov	r0, r3
+ 8002224:	f7ff fe86 	bl	8001f34 <hts221_readArray>
 	//hts221_readArray(buffer + 2, HTS221_ADDRESS_T1_OUT_L, 2);
-	uint16_t t0Out = ((uint16_t) buffer[1]) << 8 | (uint16_t)buffer[0];
- 8002210:	7b7b      	ldrb	r3, [r7, #13]
- 8002212:	021b      	lsls	r3, r3, #8
- 8002214:	b21a      	sxth	r2, r3
- 8002216:	7b3b      	ldrb	r3, [r7, #12]
- 8002218:	b21b      	sxth	r3, r3
- 800221a:	4313      	orrs	r3, r2
- 800221c:	b21b      	sxth	r3, r3
- 800221e:	827b      	strh	r3, [r7, #18]
-	uint16_t t1Out = ((uint16_t) buffer[3]) << 8 | (uint16_t)buffer[2];
- 8002220:	7bfb      	ldrb	r3, [r7, #15]
- 8002222:	021b      	lsls	r3, r3, #8
- 8002224:	b21a      	sxth	r2, r3
- 8002226:	7bbb      	ldrb	r3, [r7, #14]
- 8002228:	b21b      	sxth	r3, r3
- 800222a:	4313      	orrs	r3, r2
- 800222c:	b21b      	sxth	r3, r3
- 800222e:	823b      	strh	r3, [r7, #16]
+	int16_t t0Out = ((int16_t) buffer[1]) << 8 | (int16_t)buffer[0];
+ 8002228:	7a7b      	ldrb	r3, [r7, #9]
+ 800222a:	021b      	lsls	r3, r3, #8
+ 800222c:	b21a      	sxth	r2, r3
+ 800222e:	7a3b      	ldrb	r3, [r7, #8]
+ 8002230:	b21b      	sxth	r3, r3
+ 8002232:	4313      	orrs	r3, r2
+ 8002234:	823b      	strh	r3, [r7, #16]
+	int16_t t1Out = ((int16_t) buffer[3]) << 8 | (int16_t)buffer[2];
+ 8002236:	7afb      	ldrb	r3, [r7, #11]
+ 8002238:	021b      	lsls	r3, r3, #8
+ 800223a:	b21a      	sxth	r2, r3
+ 800223c:	7abb      	ldrb	r3, [r7, #10]
+ 800223e:	b21b      	sxth	r3, r3
+ 8002240:	4313      	orrs	r3, r2
+ 8002242:	81fb      	strh	r3, [r7, #14]
 
-	temperatureStruct->t0DegC = t0DegX8 / 8;
- 8002230:	8afb      	ldrh	r3, [r7, #22]
- 8002232:	08db      	lsrs	r3, r3, #3
- 8002234:	b29b      	uxth	r3, r3
- 8002236:	b2da      	uxtb	r2, r3
- 8002238:	683b      	ldr	r3, [r7, #0]
- 800223a:	701a      	strb	r2, [r3, #0]
-	temperatureStruct->t1DegC = t1DegX8 / 8;
- 800223c:	8abb      	ldrh	r3, [r7, #20]
- 800223e:	08db      	lsrs	r3, r3, #3
- 8002240:	b29b      	uxth	r3, r3
- 8002242:	b2da      	uxtb	r2, r3
- 8002244:	683b      	ldr	r3, [r7, #0]
- 8002246:	705a      	strb	r2, [r3, #1]
+	temperatureStruct->t0DegC = t0DegX8 >> 3;
+ 8002244:	f9b7 3014 	ldrsh.w	r3, [r7, #20]
+ 8002248:	10db      	asrs	r3, r3, #3
+ 800224a:	b21a      	sxth	r2, r3
+ 800224c:	683b      	ldr	r3, [r7, #0]
+ 800224e:	801a      	strh	r2, [r3, #0]
+	temperatureStruct->t1DegC = t1DegX8 >> 3;
+ 8002250:	f9b7 3012 	ldrsh.w	r3, [r7, #18]
+ 8002254:	10db      	asrs	r3, r3, #3
+ 8002256:	b21a      	sxth	r2, r3
+ 8002258:	683b      	ldr	r3, [r7, #0]
+ 800225a:	805a      	strh	r2, [r3, #2]
 	temperatureStruct->t0Out = t0Out;
- 8002248:	683b      	ldr	r3, [r7, #0]
- 800224a:	8a7a      	ldrh	r2, [r7, #18]
- 800224c:	805a      	strh	r2, [r3, #2]
+ 800225c:	683b      	ldr	r3, [r7, #0]
+ 800225e:	8a3a      	ldrh	r2, [r7, #16]
+ 8002260:	809a      	strh	r2, [r3, #4]
 	temperatureStruct->t1Out = t1Out;
- 800224e:	683b      	ldr	r3, [r7, #0]
- 8002250:	8a3a      	ldrh	r2, [r7, #16]
- 8002252:	809a      	strh	r2, [r3, #4]
+ 8002262:	683b      	ldr	r3, [r7, #0]
+ 8002264:	89fa      	ldrh	r2, [r7, #14]
+ 8002266:	80da      	strh	r2, [r3, #6]
 }
- 8002254:	bf00      	nop
- 8002256:	3720      	adds	r7, #32
- 8002258:	46bd      	mov	sp, r7
- 800225a:	bd80      	pop	{r7, pc}
+ 8002268:	bf00      	nop
+ 800226a:	3720      	adds	r7, #32
+ 800226c:	46bd      	mov	sp, r7
+ 800226e:	bd80      	pop	{r7, pc}
 
-0800225c <__libc_init_array>:
- 800225c:	b570      	push	{r4, r5, r6, lr}
- 800225e:	4d0d      	ldr	r5, [pc, #52]	; (8002294 <__libc_init_array+0x38>)
- 8002260:	4c0d      	ldr	r4, [pc, #52]	; (8002298 <__libc_init_array+0x3c>)
- 8002262:	1b64      	subs	r4, r4, r5
- 8002264:	10a4      	asrs	r4, r4, #2
- 8002266:	2600      	movs	r6, #0
- 8002268:	42a6      	cmp	r6, r4
- 800226a:	d109      	bne.n	8002280 <__libc_init_array+0x24>
- 800226c:	4d0b      	ldr	r5, [pc, #44]	; (800229c <__libc_init_array+0x40>)
- 800226e:	4c0c      	ldr	r4, [pc, #48]	; (80022a0 <__libc_init_array+0x44>)
- 8002270:	f000 f818 	bl	80022a4 <_init>
- 8002274:	1b64      	subs	r4, r4, r5
- 8002276:	10a4      	asrs	r4, r4, #2
- 8002278:	2600      	movs	r6, #0
- 800227a:	42a6      	cmp	r6, r4
- 800227c:	d105      	bne.n	800228a <__libc_init_array+0x2e>
- 800227e:	bd70      	pop	{r4, r5, r6, pc}
- 8002280:	f855 3b04 	ldr.w	r3, [r5], #4
- 8002284:	4798      	blx	r3
- 8002286:	3601      	adds	r6, #1
- 8002288:	e7ee      	b.n	8002268 <__libc_init_array+0xc>
- 800228a:	f855 3b04 	ldr.w	r3, [r5], #4
- 800228e:	4798      	blx	r3
- 8002290:	3601      	adds	r6, #1
- 8002292:	e7f2      	b.n	800227a <__libc_init_array+0x1e>
- 8002294:	080022f8 	.word	0x080022f8
- 8002298:	080022f8 	.word	0x080022f8
- 800229c:	080022f8 	.word	0x080022f8
- 80022a0:	080022fc 	.word	0x080022fc
+08002270 <__libc_init_array>:
+ 8002270:	b570      	push	{r4, r5, r6, lr}
+ 8002272:	4d0d      	ldr	r5, [pc, #52]	; (80022a8 <__libc_init_array+0x38>)
+ 8002274:	4c0d      	ldr	r4, [pc, #52]	; (80022ac <__libc_init_array+0x3c>)
+ 8002276:	1b64      	subs	r4, r4, r5
+ 8002278:	10a4      	asrs	r4, r4, #2
+ 800227a:	2600      	movs	r6, #0
+ 800227c:	42a6      	cmp	r6, r4
+ 800227e:	d109      	bne.n	8002294 <__libc_init_array+0x24>
+ 8002280:	4d0b      	ldr	r5, [pc, #44]	; (80022b0 <__libc_init_array+0x40>)
+ 8002282:	4c0c      	ldr	r4, [pc, #48]	; (80022b4 <__libc_init_array+0x44>)
+ 8002284:	f000 f818 	bl	80022b8 <_init>
+ 8002288:	1b64      	subs	r4, r4, r5
+ 800228a:	10a4      	asrs	r4, r4, #2
+ 800228c:	2600      	movs	r6, #0
+ 800228e:	42a6      	cmp	r6, r4
+ 8002290:	d105      	bne.n	800229e <__libc_init_array+0x2e>
+ 8002292:	bd70      	pop	{r4, r5, r6, pc}
+ 8002294:	f855 3b04 	ldr.w	r3, [r5], #4
+ 8002298:	4798      	blx	r3
+ 800229a:	3601      	adds	r6, #1
+ 800229c:	e7ee      	b.n	800227c <__libc_init_array+0xc>
+ 800229e:	f855 3b04 	ldr.w	r3, [r5], #4
+ 80022a2:	4798      	blx	r3
+ 80022a4:	3601      	adds	r6, #1
+ 80022a6:	e7f2      	b.n	800228e <__libc_init_array+0x1e>
+ 80022a8:	0800230c 	.word	0x0800230c
+ 80022ac:	0800230c 	.word	0x0800230c
+ 80022b0:	0800230c 	.word	0x0800230c
+ 80022b4:	08002310 	.word	0x08002310
 
-080022a4 <_init>:
- 80022a4:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
- 80022a6:	bf00      	nop
- 80022a8:	bcf8      	pop	{r3, r4, r5, r6, r7}
- 80022aa:	bc08      	pop	{r3}
- 80022ac:	469e      	mov	lr, r3
- 80022ae:	4770      	bx	lr
+080022b8 <_init>:
+ 80022b8:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 80022ba:	bf00      	nop
+ 80022bc:	bcf8      	pop	{r3, r4, r5, r6, r7}
+ 80022be:	bc08      	pop	{r3}
+ 80022c0:	469e      	mov	lr, r3
+ 80022c2:	4770      	bx	lr
 
-080022b0 <_fini>:
- 80022b0:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
- 80022b2:	bf00      	nop
- 80022b4:	bcf8      	pop	{r3, r4, r5, r6, r7}
- 80022b6:	bc08      	pop	{r3}
- 80022b8:	469e      	mov	lr, r3
- 80022ba:	4770      	bx	lr
+080022c4 <_fini>:
+ 80022c4:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 80022c6:	bf00      	nop
+ 80022c8:	bcf8      	pop	{r3, r4, r5, r6, r7}
+ 80022ca:	bc08      	pop	{r3}
+ 80022cc:	469e      	mov	lr, r3
+ 80022ce:	4770      	bx	lr
