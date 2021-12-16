@@ -65,7 +65,7 @@ const uint8_t Font_Table[] = {
 SegmentDigitStruct GetSegmentDigit(uint8_t chr) {
 	SegmentDigitStruct result;
 	if ((chr >= '0' && chr <= '9') || (chr >= 'A' && chr <= 'Z')
-			|| chr == '_') {
+			|| chr == '_' || chr == '.' || chr == ',' || chr == '-') {
 		uint8_t fontChar = 0;
 		uint8_t index = 0;
 		if (chr >= '0' && chr <= '9') {

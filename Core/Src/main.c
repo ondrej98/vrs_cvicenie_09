@@ -152,6 +152,8 @@ int main(void) {
 			lsm6ds0_get_acc(acc, (acc + 1), (acc + 2));
 			hts221_get_humidity(&humidity);
 			hts221_get_temperature(&temperature);
+			setString(string, HUMIDITY_STR_TEXT, HUMIDITY_STR_PROT, humidity);
+			lenString = strlen((const char*) string);
 			displayString(index, string, lenString);
 			if (index + STR_DISP_LEN < lenString
 					&& direction == Direction_DownUp) {
@@ -204,7 +206,8 @@ void SystemClock_Config(void) {
 void setString(uint8_t *str, const uint8_t *strText, const uint8_t *strProt,
 		float value) {
 	strcpy((char*) str, (const char*) strText);
-	sprintf((char*) str, (const char*) strProt, value);
+	uint16_t len = strlen((const char*) str);
+	sprintf((char*) (str+len), (const char*) strProt, value);
 }
 uint8_t displayString(uint8_t index, uint8_t *str, uint8_t length) {
 	uint8_t result = 0;
