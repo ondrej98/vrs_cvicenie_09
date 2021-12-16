@@ -8,6 +8,8 @@
 #include "hts221.h"
 
 uint8_t addresHTS221 = HTS221_DEVICE_ADDRESS;
+Hts221HumidityStruct HumidityFactoryCoef;
+Hts221TemperatureStruct TemperatureFactoryCoef;
 
 uint8_t hts221_read_byte(uint8_t reg_addr) {
 	uint8_t data = 0;
@@ -23,14 +25,11 @@ void hts221_readArray(uint8_t *data, uint8_t reg, uint8_t length) {
 }
 
 uint8_t hts221_init(void) {
-	uint8_t status = 0;
-
+	uint8_t result = 0;
 	LL_mDelay(100);
-
 	uint8_t val = hts221_read_byte(HTS221_WHO_AM_I_ADDRES);
-
 	if (val == HTS221_WHO_AM_I_VALUE) {
-		status = 1;
+		result = 1;
 		//load reserved bits from device
 		uint8_t control1 = hts221_read_byte(HTS221_ADDRESS_CTRL1);
 		//active mode
@@ -39,11 +38,67 @@ uint8_t hts221_init(void) {
 		//output registers not updated until MSB and LSB reading
 		control1 &= ~HTS221_BDU_MASK;
 		control1 |= ((uint8_t) 1) << HTS221_BDU_BIT;
-
 		//Write config. to device
 		hts221_write_byte(HTS221_ADDRESS_CTRL1, control1);
 		val = hts221_read_byte(HTS221_ADDRESS_CTRL1);
-		status = val == control1 ? 1 : 0;
+		result = val == control1 ? 1 : 0;
+		hts221_get_factory_coef(&HumidityFactoryCoef, &TemperatureFactoryCoef);
 	}
-	return status;
+	return result;
+}
+
+void hts221_get_humidity(float *humidity) {
+	uint8_t buffer[2] = { 0 };
+	hts221_readArray(buffer, HTS221_ADDRESS_H_OUT_L, 2);
+	uint16_t hOut = ((uint16_t) buffer[1]) << 8 | buffer[0];
+	float h0Rh = HumidityFactoryCoef.h0Rh;
+	float h1Rh = HumidityFactoryCoef.h1Rh;
+	float h0T0 = HumidityFactoryCoef.h0Out;
+	float h1T0 = HumidityFactoryCoef.h1Out;
+	*humidity = ((h1Rh - h0Rh) * (hOut - h0T0)) / (h1T0 - h0T0) + h0Rh;
+}
+
+void hts221_get_temperature(float *temperature) {
+	uint8_t buffer[2] = { 0 };
+	hts221_readArray(buffer, HTS221_ADDRESS_T_OUT_L, 2);
+	uint16_t tOut = ((uint16_t) buffer[1]) << 8 | buffer[0];
+	float t0Deg = TemperatureFactoryCoef.t0DegC;
+	float t1Deg = TemperatureFactoryCoef.t1DegC;
+	float t0Out = TemperatureFactoryCoef.t0Out;
+	float t1Out = TemperatureFactoryCoef.t1Out;
+	*temperature = ((t1Deg - t0Deg) * (tOut - t0Out)) / (t1Out - t0Out) + t0Deg;
+}
+
+void hts221_get_factory_coef(Hts221HumidityStruct *humidityStruct,
+		Hts221TemperatureStruct *temperatureStruct) {
+	//Get humidity factory coef.
+	uint8_t h0RhX2 = hts221_read_byte(HTS221_ADDRESS_H0_rH_x2);
+	uint8_t h1RhX2 = hts221_read_byte(HTS221_ADDRESS_H1_rH_x2);
+	uint8_t buffer[4] = { 0 };
+	hts221_readArray(buffer, HTS221_ADDRESS_H0_OUT_L, 2);
+	hts221_readArray(buffer + 2, HTS221_ADDRESS_H1_OUT_L, 2);
+	uint16_t h0Out = ((uint16_t) buffer[1]) << 8 | buffer[0];
+	uint16_t h1Out = ((uint16_t) buffer[3]) << 8 | buffer[2];
+
+	humidityStruct->h0Rh = h0RhX2 / 2;
+	humidityStruct->h1Rh = h1RhX2 / 2;
+	humidityStruct->h0Out = h0Out;
+	humidityStruct->h1Out = h1Out;
+	//Get temperature factory coef.
+	buffer[0] = hts221_read_byte(HTS221_ADDRESS_T0_degC_x8);
+	buffer[2] = hts221_read_byte(HTS221_ADDRESS_T1_degC_x8);
+	uint8_t t0t1Msb = hts221_read_byte(HTS221_ADDRESS_T1_T0_MSB);
+	buffer[1] = t0t1Msb & 0x03;
+	buffer[3] = t0t1Msb & 0x0C;
+	uint16_t t0DegX8 = ((uint16_t) buffer[1]) << 8 | buffer[0];
+	uint16_t t1DegX8 = ((uint16_t) buffer[3]) << 8 | buffer[2];
+	hts221_readArray(buffer, HTS221_ADDRESS_T0_OUT_L, 2);
+	hts221_readArray(buffer + 2, HTS221_ADDRESS_T1_OUT_L, 2);
+	uint16_t t0Out = ((uint16_t) buffer[1]) << 8 | buffer[0];
+	uint16_t t1Out = ((uint16_t) buffer[3]) << 8 | buffer[2];
+
+	temperatureStruct->t0DegC = t0DegX8 / 8;
+	temperatureStruct->t1DegC = t1DegX8 / 8;
+	temperatureStruct->t0Out = t0Out;
+	temperatureStruct->t1Out = t1Out;
 }

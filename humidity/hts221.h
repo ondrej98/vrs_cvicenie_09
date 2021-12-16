@@ -20,8 +20,8 @@
 #define HTS221_ADDRESS_T_OUT_L		0x2A
 #define HTS221_ADDRESS_T_OUT_H		0x2B
 
-#define	HTS221_ADDRESS_H0_rH_x2_L 	0x30
-#define	HTS221_ADDRESS_H1_rH_x2_H	0x31
+#define	HTS221_ADDRESS_H0_rH_x2 	0x30
+#define	HTS221_ADDRESS_H1_rH_x2		0x31
 #define	HTS221_ADDRESS_T0_degC_x8	0x32
 #define	HTS221_ADDRESS_T1_degC_x8	0x33
 
@@ -42,8 +42,23 @@
 #define HTS221_PD_MASK		(uint8_t)0x80
 #define HTS221_BDU_MASK		(uint8_t)0x04
 
+typedef struct {
+	uint8_t h0Rh;
+	uint8_t h1Rh;
+	uint16_t h0Out;
+	uint16_t h1Out;
+} Hts221HumidityStruct;
+
+typedef struct {
+	uint8_t t0DegC;
+	uint8_t t1DegC;
+	uint16_t t0Out;
+	uint16_t t1Out;
+} Hts221TemperatureStruct;
+
 uint8_t hts221_init(void);
-//void hts221_get_acc(float *x, float *y, float *z);
+void hts221_get_humidity(float *humidity);
+void hts221_get_temperature(float *temperature);
 uint8_t hts221_read_byte(uint8_t reg_addr);
 void hts221_write_byte(uint8_t reg_addr, uint8_t value);
-//int8_t hts221_get_temp();
+void hts221_get_factory_coef(Hts221HumidityStruct *humidityStruct, Hts221TemperatureStruct *temperatureStruct);
