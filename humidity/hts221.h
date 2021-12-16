@@ -38,9 +38,13 @@
 
 #define HTS221_PD_BIT 		(uint8_t)7
 #define HTS221_BDU_BIT		(uint8_t)2
+#define HTS221_ODR_BIT      (uint8_t)0
 
 #define HTS221_PD_MASK		(uint8_t)0x80
 #define HTS221_BDU_MASK		(uint8_t)0x04
+#define HTS221_ODR_MASK     (uint8_t)0x03
+
+
 
 typedef struct {
 	uint8_t h0Rh;
