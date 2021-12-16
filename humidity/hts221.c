@@ -39,10 +39,11 @@ uint8_t hts221_init(void) {
 		//output registers not updated until MSB and LSB reading
 		control1 &= ~HTS221_BDU_MASK;
 		control1 |= ((uint8_t) 1) << HTS221_BDU_BIT;
+
 		//Write config. to device
-		/*hts221_write_byte(HTS221_ADDRESS_CTRL1, control1);
+		hts221_write_byte(HTS221_ADDRESS_CTRL1, control1);
 		val = hts221_read_byte(HTS221_ADDRESS_CTRL1);
-		status = val == control1 ? 1 : 0;*/
+		status = val == control1 ? 1 : 0;
 	}
 	return status;
 }

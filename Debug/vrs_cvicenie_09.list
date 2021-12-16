@@ -5,21 +5,21 @@ Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
   0 .isr_vector   00000188  08000000  08000000  00010000  2**0
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  1 .text         00001e24  08000188  08000188  00010188  2**2
+  1 .text         00001e74  08000188  08000188  00010188  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .rodata       0000003c  08001fac  08001fac  00011fac  2**2
+  2 .rodata       0000003c  08001ffc  08001ffc  00011ffc  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  3 .ARM.extab    00000000  08001fe8  08001fe8  00020008  2**0
+  3 .ARM.extab    00000000  08002038  08002038  00020008  2**0
                   CONTENTS
-  4 .ARM          00000000  08001fe8  08001fe8  00020008  2**0
+  4 .ARM          00000000  08002038  08002038  00020008  2**0
                   CONTENTS
-  5 .preinit_array 00000000  08001fe8  08001fe8  00020008  2**0
+  5 .preinit_array 00000000  08002038  08002038  00020008  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  6 .init_array   00000004  08001fe8  08001fe8  00011fe8  2**2
+  6 .init_array   00000004  08002038  08002038  00012038  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  7 .fini_array   00000004  08001fec  08001fec  00011fec  2**2
+  7 .fini_array   00000004  0800203c  0800203c  0001203c  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  8 .data         00000008  20000000  08001ff0  00020000  2**2
+  8 .data         00000008  20000000  08002040  00020000  2**2
                   CONTENTS, ALLOC, LOAD, DATA
   9 .ccmram       00000000  10000000  10000000  00020008  2**0
                   CONTENTS
@@ -39,13 +39,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  17 .debug_macro  000175c8  00000000  00000000  0002e380  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_line   0000757d  00000000  00000000  00045948  2**0
+ 18 .debug_line   00007589  00000000  00000000  00045948  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .debug_str    0007a288  00000000  00000000  0004cec5  2**0
+ 19 .debug_str    0007a284  00000000  00000000  0004ced1  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 20 .comment      00000053  00000000  00000000  000c714d  2**0
+ 20 .comment      00000053  00000000  00000000  000c7155  2**0
                   CONTENTS, READONLY
- 21 .debug_frame  00001b94  00000000  00000000  000c71a0  2**2
+ 21 .debug_frame  00001b94  00000000  00000000  000c71a8  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -64,7 +64,7 @@ Disassembly of section .text:
  800019e:	bd10      	pop	{r4, pc}
  80001a0:	20000008 	.word	0x20000008
  80001a4:	00000000 	.word	0x00000000
- 80001a8:	08001f94 	.word	0x08001f94
+ 80001a8:	08001fe4 	.word	0x08001fe4
 
 080001ac <frame_dummy>:
  80001ac:	b508      	push	{r3, lr}
@@ -76,7 +76,7 @@ Disassembly of section .text:
  80001ba:	bd08      	pop	{r3, pc}
  80001bc:	00000000 	.word	0x00000000
  80001c0:	2000000c 	.word	0x2000000c
- 80001c4:	08001f94 	.word	0x08001f94
+ 80001c4:	08001fe4 	.word	0x08001fe4
 
 080001c8 <LL_GPIO_SetOutputPin>:
   *         @arg @ref LL_GPIO_PIN_15
@@ -733,7 +733,7 @@ SegmentDigitStruct GetSegmentDigit(uint8_t chr) {
  8000634:	f85d 7b04 	ldr.w	r7, [sp], #4
  8000638:	4770      	bx	lr
  800063a:	bf00      	nop
- 800063c:	08001fc0 	.word	0x08001fc0
+ 800063c:	08002010 	.word	0x08002010
 
 08000640 <LL_AHB1_GRP1_EnableClock>:
   *
@@ -2391,7 +2391,7 @@ int main(void) {
 	lsm6ds0_init();
  8000fcc:	f000 ff46 	bl	8001e5c <lsm6ds0_init>
 	hts221_init();
- 8000fd0:	f000 ff90 	bl	8001ef4 <hts221_init>
+ 8000fd0:	f000 ffa6 	bl	8001f20 <hts221_init>
 
 	uint8_t index = 0;
  8000fd4:	2300      	movs	r3, #0
@@ -2495,7 +2495,7 @@ int main(void) {
  8001074:	20000050 	.word	0x20000050
  8001078:	20000040 	.word	0x20000040
  800107c:	20000038 	.word	0x20000038
- 8001080:	08001fac 	.word	0x08001fac
+ 8001080:	08001ffc 	.word	0x08001ffc
  8001084:	20000048 	.word	0x20000048
  8001088:	2000004c 	.word	0x2000004c
  800108c:	20000044 	.word	0x20000044
@@ -3554,7 +3554,7 @@ LoopFillZerobss:
  8001622:	f7ff fe61 	bl	80012e8 <SystemInit>
 /* Call static constructors */
     bl __libc_init_array
- 8001626:	f000 fc91 	bl	8001f4c <__libc_init_array>
+ 8001626:	f000 fcb9 	bl	8001f9c <__libc_init_array>
 /* Call the application's entry point.*/
 	bl	main
  800162a:	f7ff fc95 	bl	8000f58 <main>
@@ -3571,7 +3571,7 @@ LoopForever:
   ldr r1, =_edata
  8001638:	20000008 	.word	0x20000008
   ldr r2, =_sidata
- 800163c:	08001ff0 	.word	0x08001ff0
+ 800163c:	08002040 	.word	0x08002040
   ldr r2, =_sbss
  8001640:	20000008 	.word	0x20000008
   ldr r4, =_ebss
@@ -5025,117 +5025,160 @@ uint8_t hts221_read_byte(uint8_t reg_addr) {
  8001eee:	bf00      	nop
  8001ef0:	20000005 	.word	0x20000005
 
-08001ef4 <hts221_init>:
+08001ef4 <hts221_write_byte>:
+
+void hts221_write_byte(uint8_t reg_addr, uint8_t value) {
+ 8001ef4:	b580      	push	{r7, lr}
+ 8001ef6:	b082      	sub	sp, #8
+ 8001ef8:	af00      	add	r7, sp, #0
+ 8001efa:	4603      	mov	r3, r0
+ 8001efc:	460a      	mov	r2, r1
+ 8001efe:	71fb      	strb	r3, [r7, #7]
+ 8001f00:	4613      	mov	r3, r2
+ 8001f02:	71bb      	strb	r3, [r7, #6]
+	i2c_master_write(value, reg_addr, addresHTS221, 0);
+ 8001f04:	4b05      	ldr	r3, [pc, #20]	; (8001f1c <hts221_write_byte+0x28>)
+ 8001f06:	781a      	ldrb	r2, [r3, #0]
+ 8001f08:	79f9      	ldrb	r1, [r7, #7]
+ 8001f0a:	79b8      	ldrb	r0, [r7, #6]
+ 8001f0c:	2300      	movs	r3, #0
+ 8001f0e:	f7fe fe41 	bl	8000b94 <i2c_master_write>
+}
+ 8001f12:	bf00      	nop
+ 8001f14:	3708      	adds	r7, #8
+ 8001f16:	46bd      	mov	sp, r7
+ 8001f18:	bd80      	pop	{r7, pc}
+ 8001f1a:	bf00      	nop
+ 8001f1c:	20000005 	.word	0x20000005
+
+08001f20 <hts221_init>:
 
 void hts221_readArray(uint8_t *data, uint8_t reg, uint8_t length) {
 	i2c_master_read(data, length, reg, addresHTS221, 1);
 }
 
 uint8_t hts221_init(void) {
- 8001ef4:	b580      	push	{r7, lr}
- 8001ef6:	b082      	sub	sp, #8
- 8001ef8:	af00      	add	r7, sp, #0
+ 8001f20:	b580      	push	{r7, lr}
+ 8001f22:	b082      	sub	sp, #8
+ 8001f24:	af00      	add	r7, sp, #0
 	uint8_t status = 0;
- 8001efa:	2300      	movs	r3, #0
- 8001efc:	71fb      	strb	r3, [r7, #7]
+ 8001f26:	2300      	movs	r3, #0
+ 8001f28:	71fb      	strb	r3, [r7, #7]
 
 	LL_mDelay(100);
- 8001efe:	2064      	movs	r0, #100	; 0x64
- 8001f00:	f7ff fecc 	bl	8001c9c <LL_mDelay>
+ 8001f2a:	2064      	movs	r0, #100	; 0x64
+ 8001f2c:	f7ff feb6 	bl	8001c9c <LL_mDelay>
 
 	uint8_t val = hts221_read_byte(HTS221_WHO_AM_I_ADDRES);
- 8001f04:	200f      	movs	r0, #15
- 8001f06:	f7ff ffdb 	bl	8001ec0 <hts221_read_byte>
- 8001f0a:	4603      	mov	r3, r0
- 8001f0c:	71bb      	strb	r3, [r7, #6]
+ 8001f30:	200f      	movs	r0, #15
+ 8001f32:	f7ff ffc5 	bl	8001ec0 <hts221_read_byte>
+ 8001f36:	4603      	mov	r3, r0
+ 8001f38:	71bb      	strb	r3, [r7, #6]
 
 	if (val == HTS221_WHO_AM_I_VALUE) {
- 8001f0e:	79bb      	ldrb	r3, [r7, #6]
- 8001f10:	2bbc      	cmp	r3, #188	; 0xbc
- 8001f12:	d116      	bne.n	8001f42 <hts221_init+0x4e>
+ 8001f3a:	79bb      	ldrb	r3, [r7, #6]
+ 8001f3c:	2bbc      	cmp	r3, #188	; 0xbc
+ 8001f3e:	d128      	bne.n	8001f92 <hts221_init+0x72>
 		status = 1;
- 8001f14:	2301      	movs	r3, #1
- 8001f16:	71fb      	strb	r3, [r7, #7]
+ 8001f40:	2301      	movs	r3, #1
+ 8001f42:	71fb      	strb	r3, [r7, #7]
 		//load reserved bits from device
 		uint8_t control1 = hts221_read_byte(HTS221_ADDRESS_CTRL1);
- 8001f18:	2020      	movs	r0, #32
- 8001f1a:	f7ff ffd1 	bl	8001ec0 <hts221_read_byte>
- 8001f1e:	4603      	mov	r3, r0
- 8001f20:	717b      	strb	r3, [r7, #5]
+ 8001f44:	2020      	movs	r0, #32
+ 8001f46:	f7ff ffbb 	bl	8001ec0 <hts221_read_byte>
+ 8001f4a:	4603      	mov	r3, r0
+ 8001f4c:	717b      	strb	r3, [r7, #5]
 		//active mode
 		control1 &= ~HTS221_PD_MASK;
- 8001f22:	797b      	ldrb	r3, [r7, #5]
- 8001f24:	f003 037f 	and.w	r3, r3, #127	; 0x7f
- 8001f28:	717b      	strb	r3, [r7, #5]
+ 8001f4e:	797b      	ldrb	r3, [r7, #5]
+ 8001f50:	f003 037f 	and.w	r3, r3, #127	; 0x7f
+ 8001f54:	717b      	strb	r3, [r7, #5]
 		control1 |= ((uint8_t) 1) << HTS221_PD_BIT;
- 8001f2a:	797b      	ldrb	r3, [r7, #5]
- 8001f2c:	f063 037f 	orn	r3, r3, #127	; 0x7f
- 8001f30:	717b      	strb	r3, [r7, #5]
+ 8001f56:	797b      	ldrb	r3, [r7, #5]
+ 8001f58:	f063 037f 	orn	r3, r3, #127	; 0x7f
+ 8001f5c:	717b      	strb	r3, [r7, #5]
 		//output registers not updated until MSB and LSB reading
 		control1 &= ~HTS221_BDU_MASK;
- 8001f32:	797b      	ldrb	r3, [r7, #5]
- 8001f34:	f023 0304 	bic.w	r3, r3, #4
- 8001f38:	717b      	strb	r3, [r7, #5]
+ 8001f5e:	797b      	ldrb	r3, [r7, #5]
+ 8001f60:	f023 0304 	bic.w	r3, r3, #4
+ 8001f64:	717b      	strb	r3, [r7, #5]
 		control1 |= ((uint8_t) 1) << HTS221_BDU_BIT;
- 8001f3a:	797b      	ldrb	r3, [r7, #5]
- 8001f3c:	f043 0304 	orr.w	r3, r3, #4
- 8001f40:	717b      	strb	r3, [r7, #5]
+ 8001f66:	797b      	ldrb	r3, [r7, #5]
+ 8001f68:	f043 0304 	orr.w	r3, r3, #4
+ 8001f6c:	717b      	strb	r3, [r7, #5]
+
 		//Write config. to device
-		/*hts221_write_byte(HTS221_ADDRESS_CTRL1, control1);
+		hts221_write_byte(HTS221_ADDRESS_CTRL1, control1);
+ 8001f6e:	797b      	ldrb	r3, [r7, #5]
+ 8001f70:	4619      	mov	r1, r3
+ 8001f72:	2020      	movs	r0, #32
+ 8001f74:	f7ff ffbe 	bl	8001ef4 <hts221_write_byte>
 		val = hts221_read_byte(HTS221_ADDRESS_CTRL1);
-		status = val == control1 ? 1 : 0;*/
+ 8001f78:	2020      	movs	r0, #32
+ 8001f7a:	f7ff ffa1 	bl	8001ec0 <hts221_read_byte>
+ 8001f7e:	4603      	mov	r3, r0
+ 8001f80:	71bb      	strb	r3, [r7, #6]
+		status = val == control1 ? 1 : 0;
+ 8001f82:	79ba      	ldrb	r2, [r7, #6]
+ 8001f84:	797b      	ldrb	r3, [r7, #5]
+ 8001f86:	429a      	cmp	r2, r3
+ 8001f88:	bf0c      	ite	eq
+ 8001f8a:	2301      	moveq	r3, #1
+ 8001f8c:	2300      	movne	r3, #0
+ 8001f8e:	b2db      	uxtb	r3, r3
+ 8001f90:	71fb      	strb	r3, [r7, #7]
 	}
 	return status;
- 8001f42:	79fb      	ldrb	r3, [r7, #7]
+ 8001f92:	79fb      	ldrb	r3, [r7, #7]
 }
- 8001f44:	4618      	mov	r0, r3
- 8001f46:	3708      	adds	r7, #8
- 8001f48:	46bd      	mov	sp, r7
- 8001f4a:	bd80      	pop	{r7, pc}
+ 8001f94:	4618      	mov	r0, r3
+ 8001f96:	3708      	adds	r7, #8
+ 8001f98:	46bd      	mov	sp, r7
+ 8001f9a:	bd80      	pop	{r7, pc}
 
-08001f4c <__libc_init_array>:
- 8001f4c:	b570      	push	{r4, r5, r6, lr}
- 8001f4e:	4d0d      	ldr	r5, [pc, #52]	; (8001f84 <__libc_init_array+0x38>)
- 8001f50:	4c0d      	ldr	r4, [pc, #52]	; (8001f88 <__libc_init_array+0x3c>)
- 8001f52:	1b64      	subs	r4, r4, r5
- 8001f54:	10a4      	asrs	r4, r4, #2
- 8001f56:	2600      	movs	r6, #0
- 8001f58:	42a6      	cmp	r6, r4
- 8001f5a:	d109      	bne.n	8001f70 <__libc_init_array+0x24>
- 8001f5c:	4d0b      	ldr	r5, [pc, #44]	; (8001f8c <__libc_init_array+0x40>)
- 8001f5e:	4c0c      	ldr	r4, [pc, #48]	; (8001f90 <__libc_init_array+0x44>)
- 8001f60:	f000 f818 	bl	8001f94 <_init>
- 8001f64:	1b64      	subs	r4, r4, r5
- 8001f66:	10a4      	asrs	r4, r4, #2
- 8001f68:	2600      	movs	r6, #0
- 8001f6a:	42a6      	cmp	r6, r4
- 8001f6c:	d105      	bne.n	8001f7a <__libc_init_array+0x2e>
- 8001f6e:	bd70      	pop	{r4, r5, r6, pc}
- 8001f70:	f855 3b04 	ldr.w	r3, [r5], #4
- 8001f74:	4798      	blx	r3
- 8001f76:	3601      	adds	r6, #1
- 8001f78:	e7ee      	b.n	8001f58 <__libc_init_array+0xc>
- 8001f7a:	f855 3b04 	ldr.w	r3, [r5], #4
- 8001f7e:	4798      	blx	r3
- 8001f80:	3601      	adds	r6, #1
- 8001f82:	e7f2      	b.n	8001f6a <__libc_init_array+0x1e>
- 8001f84:	08001fe8 	.word	0x08001fe8
- 8001f88:	08001fe8 	.word	0x08001fe8
- 8001f8c:	08001fe8 	.word	0x08001fe8
- 8001f90:	08001fec 	.word	0x08001fec
+08001f9c <__libc_init_array>:
+ 8001f9c:	b570      	push	{r4, r5, r6, lr}
+ 8001f9e:	4d0d      	ldr	r5, [pc, #52]	; (8001fd4 <__libc_init_array+0x38>)
+ 8001fa0:	4c0d      	ldr	r4, [pc, #52]	; (8001fd8 <__libc_init_array+0x3c>)
+ 8001fa2:	1b64      	subs	r4, r4, r5
+ 8001fa4:	10a4      	asrs	r4, r4, #2
+ 8001fa6:	2600      	movs	r6, #0
+ 8001fa8:	42a6      	cmp	r6, r4
+ 8001faa:	d109      	bne.n	8001fc0 <__libc_init_array+0x24>
+ 8001fac:	4d0b      	ldr	r5, [pc, #44]	; (8001fdc <__libc_init_array+0x40>)
+ 8001fae:	4c0c      	ldr	r4, [pc, #48]	; (8001fe0 <__libc_init_array+0x44>)
+ 8001fb0:	f000 f818 	bl	8001fe4 <_init>
+ 8001fb4:	1b64      	subs	r4, r4, r5
+ 8001fb6:	10a4      	asrs	r4, r4, #2
+ 8001fb8:	2600      	movs	r6, #0
+ 8001fba:	42a6      	cmp	r6, r4
+ 8001fbc:	d105      	bne.n	8001fca <__libc_init_array+0x2e>
+ 8001fbe:	bd70      	pop	{r4, r5, r6, pc}
+ 8001fc0:	f855 3b04 	ldr.w	r3, [r5], #4
+ 8001fc4:	4798      	blx	r3
+ 8001fc6:	3601      	adds	r6, #1
+ 8001fc8:	e7ee      	b.n	8001fa8 <__libc_init_array+0xc>
+ 8001fca:	f855 3b04 	ldr.w	r3, [r5], #4
+ 8001fce:	4798      	blx	r3
+ 8001fd0:	3601      	adds	r6, #1
+ 8001fd2:	e7f2      	b.n	8001fba <__libc_init_array+0x1e>
+ 8001fd4:	08002038 	.word	0x08002038
+ 8001fd8:	08002038 	.word	0x08002038
+ 8001fdc:	08002038 	.word	0x08002038
+ 8001fe0:	0800203c 	.word	0x0800203c
 
-08001f94 <_init>:
- 8001f94:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
- 8001f96:	bf00      	nop
- 8001f98:	bcf8      	pop	{r3, r4, r5, r6, r7}
- 8001f9a:	bc08      	pop	{r3}
- 8001f9c:	469e      	mov	lr, r3
- 8001f9e:	4770      	bx	lr
+08001fe4 <_init>:
+ 8001fe4:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 8001fe6:	bf00      	nop
+ 8001fe8:	bcf8      	pop	{r3, r4, r5, r6, r7}
+ 8001fea:	bc08      	pop	{r3}
+ 8001fec:	469e      	mov	lr, r3
+ 8001fee:	4770      	bx	lr
 
-08001fa0 <_fini>:
- 8001fa0:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
- 8001fa2:	bf00      	nop
- 8001fa4:	bcf8      	pop	{r3, r4, r5, r6, r7}
- 8001fa6:	bc08      	pop	{r3}
- 8001fa8:	469e      	mov	lr, r3
- 8001faa:	4770      	bx	lr
+08001ff0 <_fini>:
+ 8001ff0:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 8001ff2:	bf00      	nop
+ 8001ff4:	bcf8      	pop	{r3, r4, r5, r6, r7}
+ 8001ff6:	bc08      	pop	{r3}
+ 8001ff8:	469e      	mov	lr, r3
+ 8001ffa:	4770      	bx	lr
