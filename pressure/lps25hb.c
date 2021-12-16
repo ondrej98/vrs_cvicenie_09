@@ -21,6 +21,23 @@ void lps25hb_write_byte(uint8_t reg_addr, uint8_t value) {
 void lps25hb_readArray(uint8_t *data, uint8_t reg, uint8_t length) {
 	i2c_master_read(data, length, reg, addresLPS25HB, 1);
 }
+void lps25hb_get_pressure(int32_t *pressure) {
+	uint8_t buffer[3];
+	uint32_t tmp = 0;
+	uint8_t i;
+	int32_t raw_press = 0;
+	lps25hb_readArray(buffer, LPS25HB_ADDRESS_PressOut_XL, 3);
+
+	for (i = 0; i < 3; i++)
+		tmp |= (((uint32_t) buffer[i]) << (8 * i));
+
+	if (tmp & 0x00800000)
+		tmp |= 0xFF000000;
+	raw_press = ((int32_t)tmp);
+
+	*pressure = (raw_press * 100) / 4096;
+
+}
 
 uint8_t lps25hb_init(void) {
 	uint8_t result = 0;
@@ -55,7 +72,17 @@ uint8_t lps25hb_init(void) {
 		lps25hb_write_byte(LPS25HB_ADDRESS_CTRL1, control1);
 		val = lps25hb_read_byte(LPS25HB_ADDRESS_CTRL1);
 		result = val == control1 ? 1 : 0;
-		//hts221_get_factory_coef(&HumidityFactoryCoef, &TemperatureFactoryCoef);
+	}
+	LL_mDelay(100);
+	if (result == 1) {
+		//load reserved bits from device
+		uint8_t control2 = lps25hb_read_byte(LPS25HB_ADDRESS_CTRL2);
+		//Auto zero setting
+		control2 &= ~LPS25HB_AZ_MASK;
+		control2 |= ((uint8_t) 1) << LPS25HB_AZ_BIT;
+		//Write config. to device
+		lps25hb_write_byte(LPS25HB_ADDRESS_CTRL2, control2);
 	}
 	return result;
+
 }

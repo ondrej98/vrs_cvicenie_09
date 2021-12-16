@@ -63,6 +63,7 @@ extern volatile uint8_t ubReceiveIndex;
 uint8_t temp = 0;
 float mag[3], acc[3];
 float humidity, temperature = -1.f;
+int32_t pressure = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -153,6 +154,7 @@ int main(void) {
 			lsm6ds0_get_acc(acc, (acc + 1), (acc + 2));
 			hts221_get_humidity(&humidity);
 			hts221_get_temperature(&temperature);
+			lps25hb_get_pressure(&pressure);
 			setString(string, HUMIDITY_STR_TEXT, HUMIDITY_STR_PROT, humidity);
 			lenString = strlen((const char*) string);
 			displayString(index, string, lenString);
