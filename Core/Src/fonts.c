@@ -58,6 +58,8 @@ const uint8_t Font_Table[] = {
 		0x3B, // Y
 		0x6D, // Z*
 		0x08, // _
+		0x01, //-
+		0x80, //.,
 		};
 
 SegmentDigitStruct GetSegmentDigit(uint8_t chr) {
@@ -74,6 +76,10 @@ SegmentDigitStruct GetSegmentDigit(uint8_t chr) {
 			fontChar = Font_Table[FONTS_CHARS_START + index];
 		} else if (chr == '_') {
 			fontChar = Font_Table[FONTS_UNDERSCORE];
+		}else if(chr == '-'){
+			fontChar = Font_Table[FONTS_MINUS];
+		}else if(chr == '.' || chr == ','){
+			fontChar = Font_Table[FONTS_DOT];
 		}
 		result.sA = fontChar & ConverterValue_SegmentA ? true : false;
 		result.sB = fontChar & ConverterValue_SegmentB ? true : false;

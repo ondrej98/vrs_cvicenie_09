@@ -40,6 +40,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -71,7 +72,14 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+const uint8_t TEMPERATURE_STR_TEXT[] = "TEMP_";
+const uint8_t TEMPERATURE_STR_PROT[] = "%04.1f";
+const uint8_t HUMIDITY_STR_TEXT[] = "HUM_";
+const uint8_t HUMIDITY_STR_PROT[] = "%02.0f";
+const uint8_t BAR_STR_TEXT[] = "BAR_";
+const uint8_t BAR_STR_PROT[] = "%07.2f";
+const uint8_t ALTITUDE_STR_TEXT[] = "ALT_";
+const uint8_t ALTITUDE_STR_PROT[] = "%06.1f";
 /* USER CODE END 0 */
 
 /**
@@ -127,8 +135,10 @@ int main(void) {
 	hts221_init();
 
 	uint8_t index = 0;
-	uint8_t string[] = "ONDREJ_DURMIS_98324";
-	uint8_t lenString = 19;
+	uint8_t string[STR_LEN] = { 0 };
+	uint8_t lenString = STR_LEN;
+	setString(string, TEMPERATURE_STR_TEXT, TEMPERATURE_STR_PROT, temperature);
+	lenString = strlen((const char*) string);
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
@@ -191,6 +201,11 @@ void SystemClock_Config(void) {
 }
 
 /* USER CODE BEGIN 4 */
+void setString(uint8_t *str, const uint8_t *strText, const uint8_t *strProt,
+		float value) {
+	strcpy((char*) str, (const char*) strText);
+	sprintf((char*) str, (const char*) strProt, value);
+}
 uint8_t displayString(uint8_t index, uint8_t *str, uint8_t length) {
 	uint8_t result = 0;
 	if (index + STR_DISP_LEN <= length) {

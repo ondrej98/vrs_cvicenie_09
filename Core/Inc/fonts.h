@@ -12,6 +12,8 @@
 #define FONTS_DIGITS_START 0
 #define FONTS_CHARS_START 10
 #define FONTS_UNDERSCORE 36
+#define FONTS_MINUS 37
+#define FONTS_DOT 38
 
 typedef enum{
 	false = 0,
