@@ -50,6 +50,7 @@ uint8_t lps25hb_init(void) {
 		//ODR register sampling
 		control1 &= ~LPS25HB_ODR_MASK;
 		control1 |= ((uint8_t) 2) << LPS25HB_ODR_BIT;
+		val = control1;
 		//Write config. to device
 		lps25hb_write_byte(LPS25HB_ADDRESS_CTRL1, control1);
 		val = lps25hb_read_byte(LPS25HB_ADDRESS_CTRL1);
