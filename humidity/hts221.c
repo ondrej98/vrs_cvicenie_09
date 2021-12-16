@@ -85,8 +85,8 @@ void hts221_get_factory_coef(Hts221HumidityStruct *humidityStruct,
 	uint16_t h0Out = ((uint16_t) buffer[1]) << 8 | (uint16_t)buffer[0];
 	uint16_t h1Out = ((uint16_t) buffer[3]) << 8 | (uint16_t)buffer[2];
 
-	humidityStruct->h0Rh = h0RhX2 / 2;
-	humidityStruct->h1Rh = h1RhX2 / 2;
+	humidityStruct->h0Rh = h0RhX2 >> 1;
+	humidityStruct->h1Rh = h1RhX2 >> 1;
 	humidityStruct->h0Out = h0Out;
 	humidityStruct->h1Out = h1Out;
 	//Get temperature factory coef.
@@ -96,14 +96,14 @@ void hts221_get_factory_coef(Hts221HumidityStruct *humidityStruct,
 	buffer[1] = t0t1Msb & 0x03;
 	buffer[3] = t0t1Msb & 0x0C;
 	uint16_t t0DegX8 = ((uint16_t) buffer[1]) << 8 | (uint16_t)buffer[0];
-	uint16_t t1DegX8 = ((uint16_t) buffer[3]) << 8 | (uint16_t)buffer[2];
+	uint16_t t1DegX8 = ((uint16_t) buffer[3]) << 6 | (uint16_t)buffer[2];
 	hts221_readArray(buffer, HTS221_ADDRESS_T0_OUT_L, 4);
 	//hts221_readArray(buffer + 2, HTS221_ADDRESS_T1_OUT_L, 2);
 	uint16_t t0Out = ((uint16_t) buffer[1]) << 8 | (uint16_t)buffer[0];
 	uint16_t t1Out = ((uint16_t) buffer[3]) << 8 | (uint16_t)buffer[2];
 
-	temperatureStruct->t0DegC = t0DegX8 / 8;
-	temperatureStruct->t1DegC = t1DegX8 / 8;
+	temperatureStruct->t0DegC = t0DegX8 >> 3;
+	temperatureStruct->t1DegC = t1DegX8 >> 3;
 	temperatureStruct->t0Out = t0Out;
 	temperatureStruct->t1Out = t1Out;
 }
