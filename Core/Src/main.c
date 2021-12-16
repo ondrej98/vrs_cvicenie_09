@@ -30,6 +30,7 @@
 #include "i2c.h"
 #include "../../compass/lis3mdltr.h"
 #include "../../accelerometer/lsm6ds0.h"
+#include "../../humidity/hts221.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -122,6 +123,7 @@ int main(void) {
 	MX_TIM7_Init();
 	/* USER CODE BEGIN 2 */
 	lsm6ds0_init();
+	hts221_init();
 
 	uint8_t index = 0;
 	uint8_t string[] = "ONDREJ_DURMIS_98324";
