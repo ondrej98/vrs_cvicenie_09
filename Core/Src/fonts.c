@@ -58,8 +58,8 @@ const uint8_t Font_Table[] = {
 		0x3B, // Y
 		0x6D, // Z*
 		0x08, // _
-		0x01, //-
-		0x80, //.,
+		0x01, // -
+		0x80, // .,
 		};
 
 SegmentDigitStruct GetSegmentDigit(uint8_t chr) {

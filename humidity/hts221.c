@@ -38,7 +38,7 @@ uint8_t hts221_init(void) {
 		//output registers not updated until MSB and LSB reading
 		control1 &= ~HTS221_BDU_MASK;
 		control1 |= ((uint8_t) 1) << HTS221_BDU_BIT;
-
+		//ODR register sampling
 		control1 &= ~HTS221_ODR_MASK;
 		control1 |= ((uint8_t) 2) << HTS221_ODR_BIT;
 		//Write config. to device

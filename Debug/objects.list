@@ -19,3 +19,4 @@
 "./accelerometer/lsm6ds0.o"
 "./compass/lis3mdltr.o"
 "./humidity/hts221.o"
+"./pressure/lps25hb.o"

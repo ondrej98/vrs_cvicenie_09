@@ -31,6 +31,7 @@
 #include "../../compass/lis3mdltr.h"
 #include "../../accelerometer/lsm6ds0.h"
 #include "../../humidity/hts221.h"
+#include "../../pressure/lps25hb.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -133,7 +134,7 @@ int main(void) {
 	/* USER CODE BEGIN 2 */
 	lsm6ds0_init();
 	hts221_init();
-
+	lps25hb_init();
 	uint8_t index = 0;
 	uint8_t string[STR_LEN] = { 0 };
 	uint8_t lenString = STR_LEN;
@@ -162,7 +163,6 @@ int main(void) {
 					&& direction == Direction_DownUp) {
 				direction = Direction_UpDown;
 			}
-
 			if (index > 0 && direction == Direction_UpDown) {
 				index--;
 			} else if (index == 0 && direction == Direction_UpDown) {
