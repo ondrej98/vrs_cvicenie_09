@@ -53,7 +53,21 @@ extern "C" {
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
-
+typedef enum {
+	Direction_DownUp, Direction_UpDown
+} Direction_;
+typedef enum {
+	MetricsOption_Temperature = 0,
+	MetricsOption_Humidity,
+	MetricsOption_Pressure,
+	MetricsOption_Altitude = 3,
+} MetricsOption_;
+typedef struct{
+	float temperature;
+	float humidity;
+	float pressure;
+	float altitude;
+} MetricsStruct;
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/
@@ -71,6 +85,7 @@ extern "C" {
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
+void setMetricsOption(uint8_t *str, MetricsOption_ metricsOption, MetricsStruct metricsStruct);
 void setString(uint8_t *str, const uint8_t *strText, const uint8_t *strProt,
 		float value, float minValue, float maxValue);
 uint8_t displayString(uint8_t index, uint8_t *str, uint8_t length);
@@ -109,6 +124,7 @@ uint8_t displayString(uint8_t index, uint8_t *str, uint8_t length);
 #define VCP_RX_GPIO_Port GPIOA
 #define TLACIDLO_Pin LL_GPIO_PIN_3
 #define TLACIDLO_GPIO_Port GPIOB
+#define TLACIDLO_EXTI_IRQn EXTI3_IRQn
 #define S_G_Pin LL_GPIO_PIN_4
 #define S_G_GPIO_Port GPIOB
 #define S_D_Pin LL_GPIO_PIN_5
@@ -126,9 +142,7 @@ uint8_t displayString(uint8_t index, uint8_t *str, uint8_t length);
                                                                  0 bit  for subpriority */
 #endif
 /* USER CODE BEGIN Private defines */
-typedef enum {
-	Direction_DownUp, Direction_UpDown
-} Direction_;
+MetricsOption_ metOpt;
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus
