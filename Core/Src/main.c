@@ -112,12 +112,12 @@ int main(void) {
 	Direction_ direction = Direction_DownUp;
 	end_of_read_flag = 0;
 	ubReceiveIndex = 0;
-	metOpt = MetricsOption_Temperature;
+	metOpt = MetricsOption_Altitude;
 	metrics.temperature = -1;
 	metrics.humidity = -1;
 	metrics.pressure = -1;
 	metrics.altitude = -1;
-	switch_state = 0;
+	switch_state = 1;
 	/* USER CODE END 1 */
 
 	/* MCU Configuration--------------------------------------------------------*/
@@ -154,7 +154,7 @@ int main(void) {
 	uint8_t index = 0;
 	uint8_t string[STR_LEN] = { 0 };
 	uint8_t lenString = STR_LEN;
-	setMetricsOption(string, metOpt, metrics, &index);
+	setMetricsOption(string, metOpt, metrics);
 	lenString = strlen((const char*) string);
 	/* USER CODE END 2 */
 
@@ -162,18 +162,25 @@ int main(void) {
 	/* USER CODE BEGIN WHILE */
 	while (1) {
 		/* USER CODE END WHILE */
-
 		/* USER CODE BEGIN 3 */
 		if (switch_state) {
+			index = 0;
+			metOpt++;
+			if (metOpt < MetricsOption_Temperature
+					|| metOpt > MetricsOption_Altitude) {
+				metOpt = MetricsOption_Temperature;
+			}
+
+			switch_state = 0;
+		}
+		if (nextStringSequence) {
+			nextStringSequence = false;
 			hts221_get_temperature(&metrics.temperature);
 			hts221_get_humidity(&metrics.humidity);
 			lps25hb_get_pressure(&metrics.pressure);
 			lps25hb_get_altitude(&metrics.altitude);
-			setMetricsOption(string, metOpt, metrics, &index);
+			setMetricsOption(string, metOpt, metrics);
 			lenString = strlen((const char*) string);
-		}
-		if (nextStringSequence) {
-			nextStringSequence = false;
 			displayString(index, string, lenString);
 			if (index + STR_DISP_LEN < lenString
 					&& direction == Direction_DownUp) {
@@ -227,7 +234,7 @@ uint8_t checkButtonState(GPIO_TypeDef *PORT, uint8_t PIN, uint8_t edge,
 	//type your code for "checkButtonState" implementation here:
 	uint8_t button_state = 0, timeout = 0;
 	while (timeout < samples_window) {
-		if (!(LL_GPIO_ReadInputPort(PORT) & (1 << PIN))) {
+		if ((LL_GPIO_ReadInputPort(PORT) & (1 << PIN))) {
 			button_state += 1;
 		} else {
 			//button_state = 0;
@@ -240,29 +247,25 @@ uint8_t checkButtonState(GPIO_TypeDef *PORT, uint8_t PIN, uint8_t edge,
 		return 0;
 }
 void setMetricsOption(uint8_t *str, MetricsOption_ metricsOption,
-		MetricsStruct metricsStruct, uint8_t *index) {
+		MetricsStruct metricsStruct) {
 	switch (metricsOption) {
 	default: //Unknown
 		break;
 	case MetricsOption_Temperature:
 		setString(str, TEMPERATURE_STR_TEXT, TEMPERATURE_STR_PROT,
 				metricsStruct.temperature, TEMPERATURE_MIN, TEMPERATURE_MAX);
-		*index = 0;
 		break;
 	case MetricsOption_Humidity:
 		setString(str, HUMIDITY_STR_TEXT, HUMIDITY_STR_PROT,
 				metricsStruct.humidity, HUMIDITY_MIN, HUMIDITY_MAX);
-		*index = 0;
 		break;
 	case MetricsOption_Pressure:
 		setString(str, PRESSURE_STR_TEXT, PRESSURE_STR_PROT,
 				metricsStruct.pressure, PRESSURE_MIN, PRESSURE_MAX);
-		*index = 0;
 		break;
 	case MetricsOption_Altitude:
 		setString(str, ALTITUDE_STR_TEXT, ALTITUDE_STR_PROT,
 				metricsStruct.altitude, ALTITUDE_MIN, ALTITUDE_MAX);
-		*index = 0;
 		break;
 	}
 }

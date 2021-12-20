@@ -196,20 +196,16 @@ void SysTick_Handler(void) {
  */
 void EXTI3_IRQHandler(void) {
 	/* USER CODE BEGIN EXTI3_IRQn 0 */
-	if (checkButtonState(TLACIDLO_GPIO_Port, TLACIDLO_Pin, BUTTON_EXTI_TRIGGER,
-	BUTTON_EXTI_SAMPLES_WINDOW, BUTTON_EXTI_SAMPLES_REQUIRED)) {
-		switch_state ^= 1;
-		metOpt++;
-		if (metOpt < MetricsOption_Temperature
-				|| metOpt > MetricsOption_Altitude) {
-			metOpt = MetricsOption_Temperature;
-		}
-	}
+
 	/* USER CODE END EXTI3_IRQn 0 */
 	if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_3) != RESET) {
 		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_3);
 		/* USER CODE BEGIN LL_EXTI_LINE_3 */
+		if (checkButtonState(TLACIDLO_GPIO_Port, TLACIDLO_Pin, BUTTON_EXTI_TRIGGER,
+			BUTTON_EXTI_SAMPLES_WINDOW, BUTTON_EXTI_SAMPLES_REQUIRED) && switch_state == 0) {
+				switch_state = 1;
 
+			}
 		/* USER CODE END LL_EXTI_LINE_3 */
 	}
 	/* USER CODE BEGIN EXTI3_IRQn 1 */

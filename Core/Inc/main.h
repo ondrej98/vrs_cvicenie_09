@@ -97,7 +97,7 @@ void Error_Handler(void);
  *  @input_param_5 - samples_required: How many samples in row are required to be in the idle state.
  */
 uint8_t checkButtonState(GPIO_TypeDef* PORT, uint8_t PIN, uint8_t edge, uint8_t samples_window, uint8_t samples_required);
-void setMetricsOption(uint8_t *str, MetricsOption_ metricsOption, MetricsStruct metricsStruct, uint8_t *index);
+void setMetricsOption(uint8_t *str, MetricsOption_ metricsOption, MetricsStruct metricsStruct);
 void setString(uint8_t *str, const uint8_t *strText, const uint8_t *strProt,
 		float value, float minValue, float maxValue);
 uint8_t displayString(uint8_t index, uint8_t *str, uint8_t length);

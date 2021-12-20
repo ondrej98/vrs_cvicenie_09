@@ -14,9 +14,9 @@ stm32f3xx_ll_system.h:1618:22:LL_FLASH_SetLatency	16	static
 stm32f3xx_ll_system.h:1631:26:LL_FLASH_GetLatency	4	static
 stm32f3xx_ll_gpio.h:769:26:LL_GPIO_ReadInputPort	16	static
 main.c:101:5:main	32	static
-main.c:199:6:SystemClock_Config	8	static
-main.c:225:9:checkButtonState	24	static
-main.c:242:6:setMetricsOption	40	static
-main.c:269:6:setString	48	static
-main.c:279:9:displayString	24	static
-main.c:299:6:Error_Handler	4	static,ignoring_inline_asm
+main.c:206:6:SystemClock_Config	8	static
+main.c:232:9:checkButtonState	24	static
+main.c:249:6:setMetricsOption	32	static
+main.c:272:6:setString	48	static
+main.c:282:9:displayString	24	static
+main.c:302:6:Error_Handler	4	static,ignoring_inline_asm
