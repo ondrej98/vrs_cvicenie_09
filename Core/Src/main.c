@@ -63,7 +63,7 @@ extern volatile uint8_t ubReceiveIndex;
 uint8_t temp = 0;
 float mag[3], acc[3];
 float humidity, temperature = -1.f;
-int32_t pressure = 0;
+float pressure = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
