@@ -85,7 +85,7 @@ typedef struct{
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
-void setMetricsOption(uint8_t *str, MetricsOption_ metricsOption, MetricsStruct metricsStruct);
+void setMetricsOption(uint8_t *str, MetricsOption_ metricsOption, MetricsStruct metricsStruct, uint8_t *index);
 void setString(uint8_t *str, const uint8_t *strText, const uint8_t *strProt,
 		float value, float minValue, float maxValue);
 uint8_t displayString(uint8_t index, uint8_t *str, uint8_t length);

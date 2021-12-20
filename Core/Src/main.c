@@ -62,9 +62,9 @@ extern volatile uint8_t ubReceiveIndex;
 extern MetricsOption_ metOpt;
 MetricsStruct metrics;
 /*uint8_t temp = 0;
-float mag[3], acc[3];
-float humidity, temperature = -1.f;
-float pressure, altitude = 0;*/
+ float mag[3], acc[3];
+ float humidity, temperature = -1.f;
+ float pressure, altitude = 0;*/
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -152,9 +152,9 @@ int main(void) {
 	uint8_t index = 0;
 	uint8_t string[STR_LEN] = { 0 };
 	uint8_t lenString = STR_LEN;
-	setMetricsOption(string, metOpt, metrics);
+	setMetricsOption(string, metOpt, metrics, &index);
 	/*setString(string, TEMPERATURE_STR_TEXT, TEMPERATURE_STR_PROT, temperature,
-			TEMPERATURE_MIN, TEMPERATURE_MAX);*/
+	 TEMPERATURE_MIN, TEMPERATURE_MAX);*/
 	lenString = strlen((const char*) string);
 	/* USER CODE END 2 */
 
@@ -167,16 +167,16 @@ int main(void) {
 		if (nextStringSequence) {
 			nextStringSequence = false;
 			/*hts221_get_humidity(&humidity);
-			hts221_get_temperature(&temperature);
-			lps25hb_get_pressure(&pressure);
-			lps25hb_get_altitude(&altitude);*/
-			hts221_get_humidity(&metrics.temperature);
+			 hts221_get_temperature(&temperature);
+			 lps25hb_get_pressure(&pressure);
+			 lps25hb_get_altitude(&altitude);*/
+			hts221_get_temperature(&metrics.temperature);
 			hts221_get_humidity(&metrics.humidity);
 			lps25hb_get_pressure(&metrics.pressure);
 			lps25hb_get_altitude(&metrics.altitude);
 			/*setString(string, ALTITUDE_STR_TEXT, ALTITUDE_STR_PROT, altitude,
-					ALTITUDE_MIN, ALTITUDE_MAX);*/
-			setMetricsOption(string, metOpt, metrics);
+			 ALTITUDE_MIN, ALTITUDE_MAX);*/
+			setMetricsOption(string, metOpt, metrics, &index);
 			lenString = strlen((const char*) string);
 			displayString(index, string, lenString);
 			if (index + STR_DISP_LEN < lenString
@@ -227,25 +227,29 @@ void SystemClock_Config(void) {
 
 /* USER CODE BEGIN 4 */
 void setMetricsOption(uint8_t *str, MetricsOption_ metricsOption,
-		MetricsStruct metricsStruct) {
+		MetricsStruct metricsStruct, uint8_t *index) {
 	switch (metricsOption) {
 	default: //Unknown
 		break;
 	case MetricsOption_Temperature:
 		setString(str, TEMPERATURE_STR_TEXT, TEMPERATURE_STR_PROT,
 				metricsStruct.temperature, TEMPERATURE_MIN, TEMPERATURE_MAX);
+		*index = 0;
 		break;
 	case MetricsOption_Humidity:
 		setString(str, HUMIDITY_STR_TEXT, HUMIDITY_STR_PROT,
 				metricsStruct.humidity, HUMIDITY_MIN, HUMIDITY_MAX);
+		*index = 0;
 		break;
 	case MetricsOption_Pressure:
 		setString(str, PRESSURE_STR_TEXT, PRESSURE_STR_PROT,
 				metricsStruct.pressure, PRESSURE_MIN, PRESSURE_MAX);
+		*index = 0;
 		break;
 	case MetricsOption_Altitude:
 		setString(str, ALTITUDE_STR_TEXT, ALTITUDE_STR_PROT,
 				metricsStruct.altitude, ALTITUDE_MIN, ALTITUDE_MAX);
+		*index = 0;
 		break;
 	}
 }
