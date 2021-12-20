@@ -60,6 +60,7 @@ extern bool nextStringSequence;
 extern uint8_t *aReceiveBuffer_read, end_of_read_flag;
 extern volatile uint8_t ubReceiveIndex;
 extern MetricsOption_ metOpt;
+extern uint8_t switch_state;
 MetricsStruct metrics;
 /*uint8_t temp = 0;
  float mag[3], acc[3];
@@ -116,6 +117,7 @@ int main(void) {
 	metrics.humidity = -1;
 	metrics.pressure = -1;
 	metrics.altitude = -1;
+	switch_state = 0;
 	/* USER CODE END 1 */
 
 	/* MCU Configuration--------------------------------------------------------*/
@@ -153,8 +155,6 @@ int main(void) {
 	uint8_t string[STR_LEN] = { 0 };
 	uint8_t lenString = STR_LEN;
 	setMetricsOption(string, metOpt, metrics, &index);
-	/*setString(string, TEMPERATURE_STR_TEXT, TEMPERATURE_STR_PROT, temperature,
-	 TEMPERATURE_MIN, TEMPERATURE_MAX);*/
 	lenString = strlen((const char*) string);
 	/* USER CODE END 2 */
 
@@ -164,20 +164,16 @@ int main(void) {
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
-		if (nextStringSequence) {
-			nextStringSequence = false;
-			/*hts221_get_humidity(&humidity);
-			 hts221_get_temperature(&temperature);
-			 lps25hb_get_pressure(&pressure);
-			 lps25hb_get_altitude(&altitude);*/
+		if (switch_state) {
 			hts221_get_temperature(&metrics.temperature);
 			hts221_get_humidity(&metrics.humidity);
 			lps25hb_get_pressure(&metrics.pressure);
 			lps25hb_get_altitude(&metrics.altitude);
-			/*setString(string, ALTITUDE_STR_TEXT, ALTITUDE_STR_PROT, altitude,
-			 ALTITUDE_MIN, ALTITUDE_MAX);*/
 			setMetricsOption(string, metOpt, metrics, &index);
 			lenString = strlen((const char*) string);
+		}
+		if (nextStringSequence) {
+			nextStringSequence = false;
 			displayString(index, string, lenString);
 			if (index + STR_DISP_LEN < lenString
 					&& direction == Direction_DownUp) {
@@ -226,6 +222,23 @@ void SystemClock_Config(void) {
 }
 
 /* USER CODE BEGIN 4 */
+uint8_t checkButtonState(GPIO_TypeDef *PORT, uint8_t PIN, uint8_t edge,
+		uint8_t samples_window, uint8_t samples_required) {
+	//type your code for "checkButtonState" implementation here:
+	uint8_t button_state = 0, timeout = 0;
+	while (timeout < samples_window) {
+		if (!(LL_GPIO_ReadInputPort(PORT) & (1 << PIN))) {
+			button_state += 1;
+		} else {
+			//button_state = 0;
+		}
+		timeout += 1;
+	}
+	if (button_state >= samples_required)
+		return 1;
+	else
+		return 0;
+}
 void setMetricsOption(uint8_t *str, MetricsOption_ metricsOption,
 		MetricsStruct metricsStruct, uint8_t *index) {
 	switch (metricsOption) {
