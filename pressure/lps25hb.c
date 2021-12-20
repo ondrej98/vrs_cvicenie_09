@@ -23,22 +23,21 @@ void lps25hb_readArray(uint8_t *data, uint8_t reg, uint8_t length) {
 }
 void lps25hb_get_pressure(float *pressure) {
 	uint8_t buffer[3];
-	uint32_t tmp = 0;
+	uint32_t raw_press = 0;
 	uint8_t i;
-	int32_t raw_press = 0;
 	lps25hb_readArray(buffer, LPS25HB_ADDRESS_PressOut_XL, 3);
-
 	for (i = 0; i < 3; i++)
-		tmp |= (((uint32_t) buffer[i]) << (8 * i));
-
-	if (tmp & 0x00800000)
-		tmp |= 0xFF000000;
-	raw_press = ((float)tmp);
-
+		raw_press |= (((uint32_t) buffer[i]) << (8 * i));
+	if (raw_press & 0x00800000)
+		raw_press |= 0xFF000000;
 	*pressure = ((float)raw_press) / 4096;
-
 }
-
+void lps25hb_get_altitude(float *altitude){
+	float pressure = 0;
+	lps25hb_get_pressure(&pressure);
+	float pressurePW = pow(pressure/LPS25HB_ALTITUDE_P0,LPS25HB_ALTITUDE_PW);
+	*altitude = LPS25HB_ALTITUDE_CONST*(1-pressurePW);
+}
 uint8_t lps25hb_init(void) {
 	uint8_t result = 0;
 	LL_mDelay(100);
@@ -76,16 +75,7 @@ uint8_t lps25hb_init(void) {
 		control1 = val;
 		val = lps25hb_read_byte(LPS25HB_ADDRESS_CTRL1);
 		result = val == control1 ? 1 : 0;
-	}/*
-	if (result == 1) {
-		//load reserved bits from device
-		uint8_t control2 = lps25hb_read_byte(LPS25HB_ADDRESS_CTRL2);
-		//Auto zero setting
-		control2 &= ~LPS25HB_AZ_MASK;
-		control2 |= ((uint8_t) 1) << LPS25HB_AZ_BIT;
-		//Write config. to device
-		lps25hb_write_byte(LPS25HB_ADDRESS_CTRL2, control2);
-	}*/
+	}
 	return result;
 
 }
