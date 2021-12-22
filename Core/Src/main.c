@@ -177,9 +177,7 @@ int main(void) {
 			nextStringSequence = false;
 			hts221_get_temperature(&metrics.temperature);
 			hts221_get_humidity(&metrics.humidity);
-			lps25hb_get_pressure(&metrics.pressureNoOffset);
-			lps25hb_get_pressureWithOffset(&metrics.pressureWithOffset);
-			lps25hb_get_pressure(&metrics.pressure);
+			lps25hb_get_pressureWithOffset(&metrics.pressure);
 			lps25hb_get_altitude(&metrics.altitude);
 			setMetricsOption(string, metOpt, metrics);
 			lenString = strlen((const char*) string);

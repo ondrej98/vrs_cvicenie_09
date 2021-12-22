@@ -16,7 +16,6 @@ RM := rm -rf
 -include Drivers/STM32F3xx_HAL_Driver/Src/subdir.mk
 -include Core/Startup/subdir.mk
 -include Core/Src/subdir.mk
--include subdir.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)
@@ -65,8 +64,8 @@ all: main-build
 main-build: vrs_cvicenie_09.elf secondary-outputs
 
 # Tool invocations
-vrs_cvicenie_09.elf: $(OBJS) $(USER_OBJS) E:\GitHub\ondrej98\vrs_cvicenie_09\STM32F303K8TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "vrs_cvicenie_09.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"E:\GitHub\ondrej98\vrs_cvicenie_09\STM32F303K8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="vrs_cvicenie_09.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+vrs_cvicenie_09.elf: $(OBJS) $(USER_OBJS) C:\ST\STM32CubeIDE_1.8.0\projekt\vrs_cvicenie_09\STM32F303K8TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "vrs_cvicenie_09.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\ST\STM32CubeIDE_1.8.0\projekt\vrs_cvicenie_09\STM32F303K8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="vrs_cvicenie_09.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -87,7 +86,7 @@ vrs_cvicenie_09.bin: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 
 # Other Targets
 clean:
-	-$(RM) $(SIZE_OUTPUT)$(OBJDUMP_LIST)$(EXECUTABLES)$(OBJS)$(S_DEPS)$(S_UPPER_DEPS)$(C_DEPS)$(OBJCOPY_BIN) vrs_cvicenie_09.elf
+	-$(RM) default.size.stdout vrs_cvicenie_09.bin vrs_cvicenie_09.elf vrs_cvicenie_09.list
 	-@echo ' '
 
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST) $(OBJCOPY_BIN)
@@ -99,6 +98,6 @@ fail-specified-linker-script-missing:
 warn-no-linker-script-specified:
 	@echo 'Warning: No linker script specified. Check the linker settings in the build configuration.'
 
-.PHONY: all clean dependents fail-specified-linker-script-missing warn-no-linker-script-specified
+.PHONY: all clean dependents main-build fail-specified-linker-script-missing warn-no-linker-script-specified
 
 -include ../makefile.targets
