@@ -30,13 +30,27 @@ void lps25hb_get_pressure(float *pressure) {
 		raw_press |= (((uint32_t) buffer[i]) << (8 * i));
 	if (raw_press & 0x00800000)
 		raw_press |= 0xFF000000;
-	*pressure = ((float)raw_press) / 4096;
+	*pressure = ((float) raw_press) / 4096;
 }
-void lps25hb_get_altitude(float *altitude){
+void lps25hb_get_pressureOffset(float *pressureOffset) {
+	uint8_t buffer[2];
+	int16_t raw_press;
+	lps25hb_readArray(buffer, LPS25HB_RPDS_L_REG, 2);
+	raw_press = (int16_t)((((uint16_t)buffer[1]) << 8) + (uint16_t)buffer[0]);
+	*pressureOffset =  ((float) raw_press) / 4096;
+}
+void lps25hb_get_pressureWithOffset(float *pressureWithOffset){
+	float rawPressure = -1;
+	float pressureOffset = -1;
+	lps25hb_get_pressure(&rawPressure);
+	lps25hb_get_pressureOffset(&pressureOffset);
+	*pressureWithOffset = rawPressure + pressureOffset;
+}
+void lps25hb_get_altitude(float *altitude) {
 	float pressure = 0;
 	lps25hb_get_pressure(&pressure);
-	float pressurePW = pow(pressure/LPS25HB_ALTITUDE_P0,LPS25HB_ALTITUDE_PW);
-	*altitude = LPS25HB_ALTITUDE_CONST*(1-pressurePW);
+	float pressurePW = pow(pressure / LPS25HB_ALTITUDE_P0, LPS25HB_ALTITUDE_PW);
+	*altitude = LPS25HB_ALTITUDE_CONST * (1 - pressurePW);
 }
 uint8_t lps25hb_init(void) {
 	uint8_t result = 0;

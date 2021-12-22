@@ -177,6 +177,8 @@ int main(void) {
 			nextStringSequence = false;
 			hts221_get_temperature(&metrics.temperature);
 			hts221_get_humidity(&metrics.humidity);
+			lps25hb_get_pressure(&metrics.pressureNoOffset);
+			lps25hb_get_pressureWithOffset(&metrics.pressureWithOffset);
 			lps25hb_get_pressure(&metrics.pressure);
 			lps25hb_get_altitude(&metrics.altitude);
 			setMetricsOption(string, metOpt, metrics);
@@ -289,7 +291,6 @@ uint8_t displayString(uint8_t index, uint8_t *str, uint8_t length) {
 		DisplayDigit_1.chr = dispStr[1];
 		DisplayDigit_2.chr = dispStr[2];
 		DisplayDigit_3.chr = dispStr[3];
-
 	}
 	return result;
 }

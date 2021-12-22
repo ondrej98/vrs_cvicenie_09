@@ -21,7 +21,8 @@
 #define LPS25HB_ADDRESS_PressOut_XL	0x28
 #define LPS25HB_ADDRESS_PressOut_L	0x29
 #define LPS25HB_ADDRESS_PressOut_H	0x2A
-
+#define LPS25HB_RPDS_L_REG			0x39
+#define LPS25HB_RPDS_H_REG			0x3A
 
 #define LPS25HB_PD_BIT 			(uint8_t)7
 #define LPS25HB_BDU_BIT			(uint8_t)2
@@ -43,4 +44,6 @@ uint8_t lps25hb_init(void);
 uint8_t lps25hb_read_byte(uint8_t reg_addr);
 void lps25hb_write_byte(uint8_t reg_addr, uint8_t value);
 void lps25hb_get_pressure(float *pressure);
+void lps25hb_get_pressureOffset(float *pressureOffset);
+void lps25hb_get_pressureWithOffset(float *pressureWithOffset);
 void lps25hb_get_altitude(float *altitude);

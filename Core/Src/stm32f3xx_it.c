@@ -204,7 +204,6 @@ void EXTI3_IRQHandler(void) {
 		if (checkButtonState(TLACIDLO_GPIO_Port, TLACIDLO_Pin, BUTTON_EXTI_TRIGGER,
 			BUTTON_EXTI_SAMPLES_WINDOW, BUTTON_EXTI_SAMPLES_REQUIRED) && switch_state == 0) {
 				switch_state = 1;
-
 			}
 		/* USER CODE END LL_EXTI_LINE_3 */
 	}

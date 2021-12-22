@@ -67,6 +67,8 @@ typedef struct{
 	float humidity;
 	float pressure;
 	float altitude;
+	float pressureNoOffset;
+	float pressureWithOffset;
 } MetricsStruct;
 /* USER CODE END ET */
 
